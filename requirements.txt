@@ -1,0 +1,4 @@
+nest-asyncio==1.5.1
+requests==2.25.1
+discord.py==1.7.2
+chess.com==1.7.5
