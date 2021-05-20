@@ -105,6 +105,12 @@ async def on_message(message):
      ticker_rounded = round(float(ticker_buy), 2)
      ticker_format = "Rs. " + str(ticker_rounded)
      await message.channel.send(ticker_format)
+  elif message.content.startswith("~ltc"):
+     response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
+     ticker_buy = response['ticker']['buy']
+     ticker_rounded = round(float(ticker_buy), 2)
+     ticker_format = "Rs. " + str(ticker_rounded)
+     await message.channel.send(ticker_format)
   elif message.content.startswith("~setmydoge"):
      msg = message.content
      msg_splitted = msg.split()
