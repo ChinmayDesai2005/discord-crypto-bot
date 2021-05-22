@@ -13,6 +13,7 @@ from deta import Deta
 printer = pprint.PrettyPrinter()
 nest_asyncio.apply()
 client = discord.Client()
+sleep_time = 0.2
 
 deta = Deta(os.environ['DETA_KEY'])
 deta_db = deta.Base("main")
@@ -23,7 +24,7 @@ deta_db.insert({
 geordi = next(deta_db.fetch({"name": "Geordi"}))[0]
 print(geordi['title'])
 deta_db.delete(geordi['key'])
-time.sleep(0.1)
+time.sleep(sleep_time)
 try:
         temp = next(deta_db.fetch({"name": "Geordi"}))[0]
         print(temp)
@@ -40,7 +41,7 @@ collection.insert_one(post).inserted_id
 mike = collection.find_one({"author": "Mike"})
 print(mike["text"])
 collection.delete_one(mike)
-time.sleep(10)
+time.sleep(sleep_time)
 temp = collection.find_one({"author": "Mike"})
 print(temp)
 
