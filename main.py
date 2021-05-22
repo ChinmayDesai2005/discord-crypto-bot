@@ -16,6 +16,16 @@ client = discord.Client()
 mongoclient = MongoClient(os.environ['MONGO_URL'])
 mongodb = mongoclient.test
 collection = mongodb.main
+post = {"author": "Mike",
+        "text": "My first blog post!",
+        "tags": ["mongodb", "python", "pymongo"]}
+collection.insert_one(post).inserted_id
+mike = collection.find_one({"author": "Mike"})
+print(mike["text"])
+collection.delete_one(mike)
+time.sleep(10)
+temp = collection.find_one({"author": "Mike"})
+print(temp)
 
 @client.event
 async def on_ready():
