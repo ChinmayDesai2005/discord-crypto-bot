@@ -8,15 +8,32 @@ import os
 import time
 from discord.ext import commands
 from pymongo import MongoClient
+from deta import Deta
 
 printer = pprint.PrettyPrinter()
 nest_asyncio.apply()
 client = discord.Client()
 
+deta = Deta(os.environ['DETA_KEY'])
+deta_db = deta.Base("main")
+deta_db.insert({
+    "name": "Geordi",
+    "title": "Chief Engineer"
+})
+geordi = next(deta_db.fetch({"name": "Geordi"}))[0]
+print(geordi['title'])
+deta_db.delete(geordi['key'])
+time.sleep(0.1)
+try:
+        temp = next(deta_db.fetch({"name": "Geordi"}))[0]
+        print(temp)
+except:
+        print("none")
+
 mongoclient = MongoClient(os.environ['MONGO_URL'])
 mongodb = mongoclient.test
 collection = mongodb.main
-post = {"author": "Mike",
+post = {"author": "Mike",             # json format, dictionary
         "text": "My first blog post!",
         "tags": ["mongodb", "python", "pymongo"]}
 collection.insert_one(post).inserted_id
@@ -272,3 +289,6 @@ async def on_message(message):
 
 client.run(os.environ['TOKEN'])
 
+# apply mongodb on all code
+# use ctx
+# do graph shit

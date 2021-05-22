@@ -3,3 +3,4 @@ requests==2.25.1
 discord.py==1.7.2
 chess.com==1.7.5
 pymongo==3.11.4
+deta==0.8
