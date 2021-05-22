@@ -7,10 +7,15 @@ import pprint
 import os
 import time
 from discord.ext import commands
+from pymongo import MongoClient
 
 printer = pprint.PrettyPrinter()
 nest_asyncio.apply()
 client = discord.Client()
+
+mongoclient = MongoClient(os.environ['MONGO_URL'])
+mongodb = mongoclient.test
+collection = mongodb.main
 
 @client.event
 async def on_ready():
