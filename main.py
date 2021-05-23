@@ -15,6 +15,11 @@ nest_asyncio.apply()
 client = discord.Client()
 bot = commands.Bot(command_prefix="~", case_insensitive=True)
 sleep_time = 0.2
+mongoclient = MongoClient(os.environ['MONGO_URL'])
+mongodb = mongoclient.test
+doge_db = mongodb.doge
+bat_db = mongodb.bat
+ltc_db = mongodb.ltc
 
 @bot.event
 async def on_ready():
@@ -114,7 +119,7 @@ async def ltc(ctx):
    ticker_buy = response['ticker']['buy']
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
-   await message.channel.send(ticker_format)
+   await ctx.channel.send(ticker_format)
 #   elif message.content.startswith("~setmydoge"):
 #      msg = message.content
 #      msg_splitted = msg.split()
