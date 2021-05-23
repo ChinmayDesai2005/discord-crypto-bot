@@ -256,7 +256,7 @@ async def on_ready():
 async def hello(ctx):
    await ctx.send(f"Hey {ctx.author.name}!")
 
-client.run(os.environ['TOKEN'])
+bot.run(os.environ['TOKEN'])
 
 # apply mongodb on all code
 # use ctx
