@@ -93,18 +93,21 @@ async def on_ready():
 #                await message.channel.send("Someone has Already Registered this Username")
 #    else:
 #       await message.channel.send("Wrong Syntax!!")
-#   elif message.content.startswith("~doge"):
-#      response = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
-#      ticker_buy = response['ticker']['buy']
-#      ticker_rounded = round(float(ticker_buy), 2)
-#      ticker_format = "Rs. " + str(ticker_rounded)
-#      await message.channel.send(ticker_format)
-#   elif message.content.startswith("~bat"):
-#      response = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
-#      ticker_buy = response['ticker']['buy']
-#      ticker_rounded = round(float(ticker_buy), 2)
-#      ticker_format = "Rs. " + str(ticker_rounded)
-#      await message.channel.send(ticker_format)
+@bot.command(name='doge', description="Give DogeCoin Price")
+async def doge(ctx):
+   response = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
+   ticker_buy = response['ticker']['buy']
+   ticker_rounded = round(float(ticker_buy), 2)
+   ticker_format = "Rs. " + str(ticker_rounded)
+   await ctx.channel.send(ticker_format)
+   
+@bot.command(name='bat', description="Give BAT Price")
+async def bat(ctx):
+   response = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
+   ticker_buy = response['ticker']['buy']
+   ticker_rounded = round(float(ticker_buy), 2)
+   ticker_format = "Rs. " + str(ticker_rounded)
+   await ctx.channel.send(ticker_format)
 #   elif message.content.startswith("~ltc"):
 #      response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
 #      ticker_buy = response['ticker']['buy']
