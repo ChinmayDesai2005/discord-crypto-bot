@@ -251,7 +251,7 @@ async def ltc(ctx):
 #                await message.channel.send(bat_formatted)
 #      else:
 #         await message.channel.send("You do not have a Account. Please register by `~setmybat <no. of BATs>`")
-@bot.command(name='ping', command_prefix="`")
+@bot.command(name='ping')
 async def ping(ctx):
       before = time.monotonic()
       message = await ctx.channel.send("Pong:ping_pong:!")
