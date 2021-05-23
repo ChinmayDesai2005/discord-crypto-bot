@@ -100,7 +100,7 @@ async def doge(ctx):
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
    await ctx.channel.send(ticker_format)
-   
+
 @bot.command(name='bat', description="Give BAT Price")
 async def bat(ctx):
    response = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
@@ -108,12 +108,13 @@ async def bat(ctx):
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
    await ctx.channel.send(ticker_format)
-#   elif message.content.startswith("~ltc"):
-#      response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
-#      ticker_buy = response['ticker']['buy']
-#      ticker_rounded = round(float(ticker_buy), 2)
-#      ticker_format = "Rs. " + str(ticker_rounded)
-#      await message.channel.send(ticker_format)
+@bot.command(name='ltc', description="Give LiteCoin Price")
+async def ltc(ctx):
+   response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
+   ticker_buy = response['ticker']['buy']
+   ticker_rounded = round(float(ticker_buy), 2)
+   ticker_format = "Rs. " + str(ticker_rounded)
+   await message.channel.send(ticker_format)
 #   elif message.content.startswith("~setmydoge"):
 #      msg = message.content
 #      msg_splitted = msg.split()
@@ -250,11 +251,13 @@ async def bat(ctx):
 #                await message.channel.send(bat_formatted)
 #      else:
 #         await message.channel.send("You do not have a Account. Please register by `~setmybat <no. of BATs>`")
-#   if message.content.startswith("&ping"):
-#         before = time.monotonic()
-#         message = await message.channel.send("Pong:ping_pong:!")
-#         ping = (time.monotonic() - before) * 1000
-#         await message.edit(content=f"Pong:ping_pong: **`{int(ping)}ms`**")
+@bot.command(name='ping', command_prefix="`")
+async def ping(ctx):
+      before = time.monotonic()
+      message = await ctx.channel.send("Pong:ping_pong:!")
+      ping = (time.monotonic() - before) * 1000
+      await message.edit(content=f"Pong:ping_pong: **`{int(ping)}ms`**")
+
 @bot.command(name='hello')
 async def hello(ctx):
    await ctx.send(f"Hey {ctx.author.name}!")
