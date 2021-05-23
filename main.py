@@ -254,7 +254,7 @@ async def on_ready():
 #         await message.edit(content=f"Pong:ping_pong: **`{int(ping)}ms`**")
 @bot.command(name='hello')
 async def hello(ctx):
-   await ctx.send(f"Hey {ctx.author.name}!"")
+   await ctx.send(f"Hey {ctx.author.name}!")
 
 client.run(os.environ['TOKEN'])
 
