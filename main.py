@@ -24,7 +24,11 @@ ltc_db = mongodb.ltc
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
-
+  
+@bot.event
+async def on_message():
+   if msg.content.startswith("~"):
+        message_cont = str(msg.content)
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
 #    final_lst = []
@@ -125,8 +129,7 @@ async def ltc(ctx):
 
 @bot.command(name='setmydoge', description="Set the number of doge you have")
 async def setmydoge(ctx):
-   msg = ctx.content
-   msg_splitted = msg.split()
+   msg_splitted = message_cont.split()
    msg_len = len(msg_splitted)
    user_id = '<@!' + str(ctx.author.id) + '>'
    print(user_id)
