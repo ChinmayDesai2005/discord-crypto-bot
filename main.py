@@ -25,10 +25,6 @@ ltc_db = mongodb.ltc
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
   
-@bot.event
-async def on_message():
-   if msg.content.startswith("~"):
-        message_cont = str(msg.content)
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
 #    final_lst = []
@@ -127,43 +123,43 @@ async def ltc(ctx):
    ticker_format = "Rs. " + str(ticker_rounded)
    await ctx.channel.send(ticker_format)
 
-@bot.command(name='setmydoge', description="Set the number of doge you have")
-async def setmydoge(ctx):
-   msg_splitted = message_cont.split()
-   msg_len = len(msg_splitted)
-   user_id = '<@!' + str(ctx.author.id) + '>'
-   print(user_id)
-   print (msg_len)
-   if msg_len >= 2:
-      try:
-         print (msg_splitted[1])
-         msg_intted = float(msg_splitted[1])
-      except:
-         await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
-      users = doge_db.find_one({"user_id" : user_id})
-      await ctx.channel.send(users)
-      if user_id in users['user_id']:
-         for idx, user in enumerate(users['user_id']):
-            if user_id == user:
-               # doge_to_be_replaced = user + ' - ' + users['coins'][idx]
-               # doge_replace =  str(user_id) + ' - ' + str(msg_intted)
-               # fin = open('doge.txt', 'r')
-               # file = fin.read()
-               # file = file.replace(doge_to_be_replaced, doge_replace)
-               # fin.close()
-               # fout = open('doge.txt', 'w')
-               # fout.write(file)
-               # fout.close()
-               #replace_one
-               await ctx.channel.send("Doge coins updated for " + str(user_id))
-      elif user_id not in users['user_id']:
-         # with open('doge.txt', 'a') as f:
-         #    f.write(str(user_id) + " - " + str(msg_intted) + "\n")
-         #    f.close()
-         # add_one
-         await ctx.channel.send("Doge Coins Updated Successfully")
-   else:
-      await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
+# @bot.command(name='setmydoge', description="Set the number of doge you have")
+# async def setmydoge(ctx):
+#    msg_splitted = message_cont.split()
+#    msg_len = len(msg_splitted)
+#    user_id = '<@!' + str(ctx.author.id) + '>'
+#    print(user_id)
+#    print (msg_len)
+#    if msg_len >= 2:
+#       try:
+#          print (msg_splitted[1])
+#          msg_intted = float(msg_splitted[1])
+#       except:
+#          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
+#       users = doge_db.find_one({"user_id" : user_id})
+#       await ctx.channel.send(users)
+#       if user_id in users['user_id']:
+#          for idx, user in enumerate(users['user_id']):
+#             if user_id == user:
+#                # doge_to_be_replaced = user + ' - ' + users['coins'][idx]
+#                # doge_replace =  str(user_id) + ' - ' + str(msg_intted)
+#                # fin = open('doge.txt', 'r')
+#                # file = fin.read()
+#                # file = file.replace(doge_to_be_replaced, doge_replace)
+#                # fin.close()
+#                # fout = open('doge.txt', 'w')
+#                # fout.write(file)
+#                # fout.close()
+#                #replace_one
+#                await ctx.channel.send("Doge coins updated for " + str(user_id))
+#       elif user_id not in users['user_id']:
+#          # with open('doge.txt', 'a') as f:
+#          #    f.write(str(user_id) + " - " + str(msg_intted) + "\n")
+#          #    f.close()
+#          # add_one
+#          await ctx.channel.send("Doge Coins Updated Successfully")
+#    else:
+#       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
 
 
 #   elif message.content.startswith("~setmybat"):
