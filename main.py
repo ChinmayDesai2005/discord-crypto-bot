@@ -98,6 +98,7 @@ async def on_ready():
 #                await message.channel.send("Someone has Already Registered this Username")
 #    else:
 #       await message.channel.send("Wrong Syntax!!")
+
 @bot.command(name='doge', description="Give DogeCoin Price")
 async def doge(ctx):
    response = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
@@ -113,6 +114,7 @@ async def bat(ctx):
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
    await ctx.channel.send(ticker_format)
+
 @bot.command(name='ltc', description="Give LiteCoin Price")
 async def ltc(ctx):
    response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
@@ -120,48 +122,47 @@ async def ltc(ctx):
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
    await ctx.channel.send(ticker_format)
-#   elif message.content.startswith("~setmydoge"):
-#      msg = message.content
-#      msg_splitted = msg.split()
-#      msg_len = len(msg_splitted)
-#      user_id = '<@!' + str(message.author.id) + '>'
-#      print(user_id)
-#      print (msg_len)
-#      if msg_len >= 2:
-#         try:
-#            print (msg_splitted[1])
-#            msg_intted = float(msg_splitted[1])
-#         except:
-#            await message.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
-#         with open("doge.txt", 'r') as f:
-#            users = {'user_id': [], 'coins': []}
-#            for line in f:
-#               line_stripped = line.strip()
-#               line_split = line_stripped.split()
-#               print(line_split)
-#               users['user_id'].append(line_split[0])
-#               users['coins'].append(line_split[2])
-#            f.close()
-#         if user_id in users['user_id']:
-#            for idx, user in enumerate(users['user_id']):
-#               if user_id == user:
-#                  doge_to_be_replaced = user + ' - ' + users['coins'][idx]
-#                  doge_replace =  str(user_id) + ' - ' + str(msg_intted)
-#                  fin = open('doge.txt', 'r')
-#                  file = fin.read()
-#                  file = file.replace(doge_to_be_replaced, doge_replace)
-#                  fin.close()
-#                  fout = open('doge.txt', 'w')
-#                  fout.write(file)
-#                  fout.close()
-#                  await message.channel.send("Doge coins updated for " + str(user_id))
-#         elif user_id not in users['user_id']:
-#             with open('doge.txt', 'a') as f:
-#                f.write(str(user_id) + " - " + str(msg_intted) + "\n")
-#                f.close()
-#             await message.channel.send("Doge Coins Updated Successfully")
-#      else:
-#         await message.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
+
+@bot.command(name='setmydoge', description="Set the number of doge you have")
+async def setmydoge(ctx):
+   msg = message.content
+   msg_splitted = msg.split()
+   msg_len = len(msg_splitted)
+   user_id = '<@!' + str(message.author.id) + '>'
+   print(user_id)
+   print (msg_len)
+   if msg_len >= 2:
+      try:
+         print (msg_splitted[1])
+         msg_intted = float(msg_splitted[1])
+      except:
+         await message.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
+      users = doge_db.find_one({"user_id" : user_id})
+      await ctx.channel.send(users)
+      if user_id in users['user_id']:
+         for idx, user in enumerate(users['user_id']):
+            if user_id == user:
+               # doge_to_be_replaced = user + ' - ' + users['coins'][idx]
+               # doge_replace =  str(user_id) + ' - ' + str(msg_intted)
+               # fin = open('doge.txt', 'r')
+               # file = fin.read()
+               # file = file.replace(doge_to_be_replaced, doge_replace)
+               # fin.close()
+               # fout = open('doge.txt', 'w')
+               # fout.write(file)
+               # fout.close()
+               #replace_one
+               await message.channel.send("Doge coins updated for " + str(user_id))
+      elif user_id not in users['user_id']:
+         # with open('doge.txt', 'a') as f:
+         #    f.write(str(user_id) + " - " + str(msg_intted) + "\n")
+         #    f.close()
+         # add_one
+         await message.channel.send("Doge Coins Updated Successfully")
+   else:
+      await message.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
+
+
 #   elif message.content.startswith("~setmybat"):
 #      msg = message.content
 #      msg_splitted = msg.split()
@@ -286,6 +287,7 @@ async def embed(ctx):
     embed.add_field(name="Secrets", value="||Surround your text with double pipes (\|\|)||", inline=False)
     embed.set_footer(text="Learn more here: realdrewdata.medium.com")
     await ctx.send(embed=embed)
+
 
 bot.run(os.environ['TOKEN'])
 
