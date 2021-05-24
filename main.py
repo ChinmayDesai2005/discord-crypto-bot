@@ -273,7 +273,7 @@ async def embed(ctx):
     title="Text Formatting",
         url="https://realdrewdata.medium.com/",
         description="Here are some ways to format text",
-        color=discord.Color.blue())
+        color=discord.Color.green())
     embed.set_author(name="RealDrewData", url="https://twitter.com/RealDrewData", icon_url="https://cdn-images-1.medium.com/fit/c/32/32/1*QVYjh50XJuOLQBeH_RZoGw.jpeg")
     #embed.set_author(name=ctx.author.display_name, url="https://twitter.com/RealDrewData", icon_url=ctx.author.avatar_url)
     embed.set_thumbnail(url="https://i.imgur.com/axLm3p6.jpeg")
