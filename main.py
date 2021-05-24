@@ -125,10 +125,10 @@ async def ltc(ctx):
 
 @bot.command(name='setmydoge', description="Set the number of doge you have")
 async def setmydoge(ctx):
-   msg = message.content
+   msg = ctx.content
    msg_splitted = msg.split()
    msg_len = len(msg_splitted)
-   user_id = '<@!' + str(message.author.id) + '>'
+   user_id = '<@!' + str(ctx.author.id) + '>'
    print(user_id)
    print (msg_len)
    if msg_len >= 2:
@@ -136,7 +136,7 @@ async def setmydoge(ctx):
          print (msg_splitted[1])
          msg_intted = float(msg_splitted[1])
       except:
-         await message.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
+         await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
       users = doge_db.find_one({"user_id" : user_id})
       await ctx.channel.send(users)
       if user_id in users['user_id']:
@@ -152,15 +152,15 @@ async def setmydoge(ctx):
                # fout.write(file)
                # fout.close()
                #replace_one
-               await message.channel.send("Doge coins updated for " + str(user_id))
+               await ctx.channel.send("Doge coins updated for " + str(user_id))
       elif user_id not in users['user_id']:
          # with open('doge.txt', 'a') as f:
          #    f.write(str(user_id) + " - " + str(msg_intted) + "\n")
          #    f.close()
          # add_one
-         await message.channel.send("Doge Coins Updated Successfully")
+         await ctx.channel.send("Doge Coins Updated Successfully")
    else:
-      await message.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
+      await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
 
 
 #   elif message.content.startswith("~setmybat"):
