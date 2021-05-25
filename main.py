@@ -21,6 +21,11 @@ doge_db = mongodb.doge
 bat_db = mongodb.bat
 ltc_db = mongodb.ltc
 
+def check_time:
+   t = time.localtime()
+   current_time = time.strgtime("%H:%M:%S - %d,%m,%y")
+   return current_time
+
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
@@ -105,7 +110,11 @@ async def doge(ctx):
    ticker_buy = response['ticker']['buy']
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
-   await ctx.channel.send(ticker_format)
+   time_now = current_time()
+   embed = discord.Embed(
+   color = discord.Color.red())
+   embed.add_field(name="Doge Coin Value", value = f"{ticker_format} @ {current_time}")
+   await ctx.channel.send(embed=embed)
 
 @bot.command(name='bat', description="Give BAT Price")
 async def bat(ctx):
