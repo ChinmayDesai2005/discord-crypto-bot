@@ -8,7 +8,8 @@ import os
 import time
 from discord.ext import commands
 from pymongo import MongoClient
-from deta import Deta
+from datetime import datetime
+import pytz
 
 printer = pprint.PrettyPrinter()
 nest_asyncio.apply()
@@ -22,8 +23,9 @@ bat_db = mongodb.bat
 ltc_db = mongodb.ltc
 
 def check_time():
-   t = time.localtime()
-   current_time = time.strftime("%I:%M%p | %d, %b, %Y")
+   IST = pytz.timezone('Asia/Kolkata')
+   t = datetime.now(IST)
+   current_time = t.strftime("%I:%M%p | %d, %b, %Y")
    return current_time
 
 @bot.event
