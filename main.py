@@ -142,7 +142,7 @@ async def setmydoge(ctx):
       print(users)
       if users != None:
          coins_set = users["amount"]
-         doge_db.replace_one({users["amount"]}, {str(msg_intted)})
+         doge_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" = str(msg_intted)})
          await ctx.channel.send("Doge Coins Updated Successfully for `" + user_id + "`")
       elif users == None:
          #add user in users
