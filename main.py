@@ -199,7 +199,7 @@ async def mydoge(ctx):
    ticker_inr = response_inr['ticker']['buy']
    response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
    ticker_usd = response_usd['ticker']['buy']
-   user_id = '<@!' + str(message.author.id) + '>'
+   user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = doge_db.find_one({"user_id": user_id})
    if coins_show != None:
       user_doge = coins_show["amount"]
