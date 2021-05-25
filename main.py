@@ -141,8 +141,8 @@ async def setmydoge(ctx):
       time.sleep(0.5)
       print(users)
       if users != None:
-         #replace the users coins
-         print("The User is in our books")
+         user_coins = users["amount"]
+         # db_doge.replace_one({})
       elif users == None:
          #add user in users
          print("The User ain't in our books")
@@ -193,32 +193,23 @@ async def setmydoge(ctx):
 #      else:
 #         await message.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
 
-#   elif message.content.startswith("~mydoge"):
-#      response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
-#      ticker_inr = response_inr['ticker']['buy']
-#      response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
-#      ticker_usd = response_usd['ticker']['buy']
-#      user_id = '<@!' + str(message.author.id) + '>'
-#      with open("doge.txt", 'r') as f:
-#           users = {'user_id': [], 'coins': []}
-#           for line in f:
-#               line_stripped = line.strip()
-#               line_split = line_stripped.split()
-#               print(line_split)
-#               users['user_id'].append(line_split[0])
-#               users['coins'].append(line_split[2])
-#           f.close()
-#      if user_id in users['user_id']:
-#         for idx, user in enumerate(users['user_id']):
-#             if user_id == user:
-#                user_doge = users['coins'][idx]
-#                doge_inr = float(user_doge) * float(ticker_inr)
-#                doge_usd = float(user_doge) * float(ticker_usd)
-#                doge_formatted = "You have " + str(user_doge) + " dogecoins \nIts value in **INR** is ₹ " + str(round(doge_inr, 4)) + "\nIts value in **USD** is $ " + str(round(doge_usd, 4))
-#                await message.channel.send(doge_formatted)
-#      else:
-#         await message.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
-#   elif message.content.startswith("~mybat"):
+@bot.command(name='mydoge')
+async def mydoge(ctx):
+   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
+   ticker_inr = response_inr['ticker']['buy']
+   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
+   ticker_usd = response_usd['ticker']['buy']
+   user_id = '<@!' + str(message.author.id) + '>'
+   coins_show = doge_db.find_one({"user_id": user_id})
+   if coins_show != None
+      user_doge = coins_show["amount"]
+      doge_inr = float(user_doge) * float(ticker_inr)
+      doge_usd = float(user_doge) * float(ticker_usd)
+      doge_formatted = "You have " + str(user_doge) + " dogecoins \nIts value in **INR** is ₹ " + str(round(doge_inr, 4)) + "\nIts value in **USD** is $ " + str(round(doge_usd, 4))
+      await ctx.channel.send(doge_formatted)
+   else:
+      await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
+# elif message.content.startswith("~mybat"):
 #      response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
 #      ticker_inr = response_inr['ticker']['buy']
 #      response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
