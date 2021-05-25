@@ -125,7 +125,12 @@ async def bat(ctx):
    ticker_buy = response['ticker']['buy']
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
-   await ctx.channel.send(ticker_format)
+   time_now = check_time()
+   embed = discord.Embed(
+   color = 	0xFF5000)
+   embed.set_author(name="BAT Value", icon_url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
+   embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
+   await ctx.channel.send(embed=embed)
 
 @bot.command(name='ltc', description="Give LTC Price")
 async def ltc(ctx):
@@ -133,7 +138,11 @@ async def ltc(ctx):
    ticker_buy = response['ticker']['buy']
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
-   await ctx.channel.send(ticker_format)
+   embed = discord.Embed(
+   color = 	0x345D9D)
+   embed.set_author(name="LTC Value", icon_url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
+   embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
+   await ctx.channel.send(embed=embed)
 
 @bot.command(name='setmydoge', description="Set the number of doge you have")
 async def setmydoge(ctx):
