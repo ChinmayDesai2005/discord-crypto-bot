@@ -141,8 +141,9 @@ async def setmydoge(ctx):
       time.sleep(0.5)
       print(users)
       if users != None:
-         user_coins = users["amount"]
-         # db_doge.replace_one({})
+         coins_set = users["amount"]
+         doge_db.replace_one({users["amount"]}, {str(msg_intted)})
+         await ctx.channel.send("Doge Coins Updated Successfully for `" + user_id + "`")
       elif users == None:
          #add user in users
          print("The User ain't in our books")
@@ -227,7 +228,7 @@ async def mydoge(ctx):
    else:
       await ctx.channel.send("You do not have a Account. Please register by `~setmybat <no. of BAT>`")
 
-      
+
 @bot.command(name='ping')
 async def ping(ctx):
       before = time.monotonic()
