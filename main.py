@@ -138,7 +138,8 @@ async def setmydoge(ctx):
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
       users = doge_db.find_one({"user_id" : user_id})
-      await ctx.channel.send(users)
+      time.sleep(0.5)
+      print(users)
       if user_id in users['user_id']:
          for idx, user in enumerate(users['user_id']):
             if user_id == user:
