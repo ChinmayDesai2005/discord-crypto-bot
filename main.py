@@ -23,7 +23,7 @@ ltc_db = mongodb.ltc
 
 def check_time():
    t = time.localtime()
-   current_time = time.strftime("%H:%M | %d, %b, %Y")
+   current_time = time.strftime("%I:%M%p | %d, %b, %Y")
    return current_time
 
 @bot.event
@@ -113,8 +113,8 @@ async def doge(ctx):
    time_now = check_time()
    embed = discord.Embed(
    color = discord.Color.red())
-   embed.set_author(name="Doge Coin Value", icon_url="https://imgur.com/z1FHjgP")
-   embed.add_field(name= "", value = f"**{ticker_format}** @ {time_now}")
+   embed.set_author(name="Doge Coin Value \n This Works", icon_url="https://imgur.com/z1FHjgP")
+   embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
    await ctx.channel.send(embed=embed)
 
 @bot.command(name='bat', description="Give BAT Price")
