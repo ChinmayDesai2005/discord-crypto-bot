@@ -113,7 +113,7 @@ async def doge(ctx):
    time_now = check_time()
    embed = discord.Embed(
    color = discord.Color.red())
-   embed.set_author(icon_url="https://en.wikipedia.org/wiki/File:Dogecoin_Logo.png#/media/File:Dogecoin_Logo.png")
+   embed.set_author(name="Doge Coin Value", icon_url="https://en.wikipedia.org/wiki/File:Dogecoin_Logo.png#/media/File:Dogecoin_Logo.png")
    embed.add_field(name="Doge Coin Value", value = f"{ticker_format} @ {time_now}")
    await ctx.channel.send(embed=embed)
 
