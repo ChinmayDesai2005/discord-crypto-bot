@@ -115,7 +115,7 @@ async def bat(ctx):
    ticker_format = "Rs. " + str(ticker_rounded)
    await ctx.channel.send(ticker_format)
 
-@bot.command(name='ltc', description="Give LiteCoin Price")
+@bot.command(name='ltc', description="Give LTC Price")
 async def ltc(ctx):
    response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
    ticker_buy = response['ticker']['buy']
@@ -148,53 +148,68 @@ async def setmydoge(ctx):
          new_user = {"user_id": user_id, "amount": msg_intted}
          doge_db.insert_one(new_user)
          time.sleep(0.2)
-         await ctx.channel.send("Doge Coins Updated Successfully for New User(new user is temp): " + user_id)
+         await ctx.channel.send("Doge Coins Updated Successfully " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
 
 
-#   elif message.content.startswith("~setmybat"):
-#      msg = message.content
-#      msg_splitted = msg.split()
-#      msg_len = len(msg_splitted)
-#      user_id = '<@!' + str(message.author.id) + '>'
-#      print(user_id)
-#      print (msg_len)
-#      if msg_len >= 2:
-#         try:
-#            print (msg_splitted[1])
-#            msg_intted = float(msg_splitted[1])
-#         except:
-#            await message.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
-#         with open("bat.txt", 'r') as f:
-#            users = {'user_id': [], 'coins': []}
-#            for line in f:
-#               line_stripped = line.strip()
-#               line_split = line_stripped.split()
-#               print(line_split)
-#               users['user_id'].append(line_split[0])
-#               users['coins'].append(line_split[2])
-#            f.close()
-#         if user_id in users['user_id']:
-#            for idx, user in enumerate(users['user_id']):
-#               if user_id == user:
-#                  bat_to_be_replaced = user + ' - ' + users['coins'][idx]
-#                  bat_replace =  str(user_id) + ' - ' + str(msg_intted)
-#                  fin = open('bat.txt', 'r')
-#                  file = fin.read()
-#                  file = file.replace(bat_to_be_replaced, bat_replace)
-#                  fin.close()
-#                  fout = open('bat.txt', 'w')
-#                  fout.write(file)
-#                  fout.close()
-#                  await message.channel.send("BAT updated for " + str(user_id))
-#         elif user_id not in users['user_id']:
-#             with open('bat.txt', 'a') as f:
-#                f.write(str(user_id) + " - " + str(msg_intted) + "\n")
-#                f.close()
-#             await message.channel.send("BAT User Account Created")
-#      else:
-#         await message.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
+@bot.command(name='setmybat', description="Set the number of BAT you have")
+async def setmybat(ctx):
+   message_cont = ctx.message.content
+   msg_splitted = message_cont.split()
+   msg_len = len(msg_splitted)
+   user_id = '<@!' + str(ctx.author.id) + ">"
+   print(user_id)
+   print (msg_len)
+   if msg_len >= 2:
+      try:
+         print (msg_splitted[1])
+         msg_intted = float(msg_splitted[1])
+      except:
+         await ctx.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
+      users = bat_db.find_one({"user_id": user_id})
+      time.sleep(0.4)
+      print(users)
+      if users != None:
+         coins_set = users["amount"]
+         bat_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" : str(msg_intted)})
+         await ctx.channel.send("BAT Updated Successfully for " + user_id)
+      elif users == None:
+         new_user = {"user_id": user_id, "amount": msg_intted}
+         bat_db.insert_one(new_user)
+         time.sleep(0.2)
+         await ctx.channel.send("BAT Updated Successfully " + user_id)
+   else:
+      await ctx.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
+
+@bot.command(name='setmyltc', description="Set the number of LTC you have")
+async def setmyltc(ctx):
+   message_cont = ctx.message.content
+   msg_splitted = message_cont.split()
+   msg_len = len(msg_splitted)
+   user_id = '<@!' + str(ctx.author.id) + ">"
+   print(user_id)
+   print (msg_len)
+   if msg_len >= 2:
+      try:
+         print (msg_splitted[1])
+         msg_intted = float(msg_splitted[1])
+      except:
+         await ctx.channel.send("Wrong Syntax \n Syntax: ~setmyltc `number`")
+      users = ltc_db.find_one({"user_id": user_id})
+      time.sleep(0.4)
+      print(users)
+      if users != None:
+         coins_set = users["amount"]
+         ltc_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" : str(msg_intted)})
+         await ctx.channel.send("LTC Updated Successfully for " + user_id)
+      elif users == None:
+         new_user = {"user_id": user_id, "amount": msg_intted}
+         ltc_db.insert_one(new_user)
+         time.sleep(0.2)
+         await ctx.channel.send("LTC Updated Successfully " + user_id)
+   else:
+      await ctx.channel.send("Wrong Syntax \n Syntax: ~setmyltc `number`")
 
 @bot.command(name='mydoge')
 async def mydoge(ctx):
@@ -214,7 +229,7 @@ async def mydoge(ctx):
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
 
 @bot.command(name='mybat')
-async def mydoge(ctx):
+async def mybat(ctx):
    response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
    ticker_inr = response_inr['ticker']['buy']
    response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
@@ -230,6 +245,22 @@ async def mydoge(ctx):
    else:
       await ctx.channel.send("You do not have a Account. Please register by `~setmybat <no. of BAT>`")
 
+@bot.command(name='myltc')
+async def myltc(ctx):
+   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
+   ticker_inr = response_inr['ticker']['buy']
+   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/ltcusdt.json").json()
+   ticker_usd = response_usd['ticker']['buy']
+   user_id = '<@!' + str(ctx.author.id) + '>'
+   coins_show = ltc_db.find_one({"user_id": user_id})
+   if coins_show != None:
+      user_ltc = coins_show["amount"]
+      ltc_inr = float(user_ltc) * float(ticker_inr)
+      ltc_usd = float(user_ltc) * float(ticker_usd)
+      ltc_formatted = "You have " + str(user_ltc) + " LTC \nIts value in **INR** is ₹ " + str(round(ltc_inr, 4)) + "\nIts value in **USD** is $ " + str(round(ltc_usd, 4))
+      await ctx.channel.send(ltc_formatted)
+   else:
+      await ctx.channel.send("You do not have a Account. Please register by `~setmyltc <no. of LTC>`")
 
 @bot.command(name='ping')
 async def ping(ctx):
