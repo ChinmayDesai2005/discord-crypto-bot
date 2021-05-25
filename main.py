@@ -209,32 +209,25 @@ async def mydoge(ctx):
       await ctx.channel.send(doge_formatted)
    else:
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
-# elif message.content.startswith("~mybat"):
-#      response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
-#      ticker_inr = response_inr['ticker']['buy']
-#      response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
-#      ticker_usd = response_usd['ticker']['buy']
-#      user_id = '<@!' + str(message.author.id) + '>'
-#      with open("bat.txt", 'r') as f:
-#           users = {'user_id': [], 'coins': []}
-#           for line in f:
-#               line_stripped = line.strip()
-#               line_split = line_stripped.split()
-#               print(line_split)
-#               users['user_id'].append(line_split[0])
-#               users['coins'].append(line_split[2])
-#           f.close()
-#      if user_id in users['user_id']:
-#         for idx, user in enumerate(users['user_id']):
-#             if user_id == user:
-#                user_bat = users['coins'][idx]
-#                bat_inr = float(user_bat) * float(ticker_inr)
-#                bat_usd = float(user_bat) * float(ticker_usd)
-#                bat_formatted = ">>> You have `" + str(user_bat) + "` BAT \nIts value in **INR** is ***₹*** `" + str(round(bat_inr, 4)) + "`\nIts value in **USD** is ***$*** `" + str(round(bat_usd, 4)) + "`"
 
-#                await message.channel.send(bat_formatted)
-#      else:
-#         await message.channel.send("You do not have a Account. Please register by `~setmybat <no. of BATs>`")
+@bot.command(name='mybat')
+async def mydoge(ctx):
+   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
+   ticker_inr = response_inr['ticker']['buy']
+   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
+   ticker_usd = response_usd['ticker']['buy']
+   user_id = '<@!' + str(ctx.author.id) + '>'
+   coins_show = bat_db.find_one({"user_id": user_id})
+   if coins_show != None:
+      user_bat = coins_show["amount"]
+      bat_inr = float(user_bat) * float(ticker_inr)
+      bat_usd = float(user_bat) * float(ticker_usd)
+      bat_formatted = "You have " + str(user_bat) + " BAT \nIts value in **INR** is ₹ " + str(round(bat_inr, 4)) + "\nIts value in **USD** is $ " + str(round(bat_usd, 4))
+      await ctx.channel.send(bat_formatted)
+   else:
+      await ctx.channel.send("You do not have a Account. Please register by `~setmybat <no. of BAT>`")
+
+      
 @bot.command(name='ping')
 async def ping(ctx):
       before = time.monotonic()
