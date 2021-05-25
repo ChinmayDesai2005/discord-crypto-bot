@@ -21,7 +21,7 @@ doge_db = mongodb.doge
 bat_db = mongodb.bat
 ltc_db = mongodb.ltc
 
-post = {"user":{"user_id": "<@!583525143385604117>", "amount": "16.0676"}}
+post = {"user_id": "<@!583525143385604117>", "amount": "16.0676"}
 doge_db.insert_one(post)
 
 
@@ -141,7 +141,7 @@ async def setmydoge(ctx):
          msg_intted = float(msg_splitted[1])
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
-      users = doge_db.find_one("user"["user_id": user_id])
+      users = doge_db.find_one("user_id": "<@!583525143385604117>")
       time.sleep(0.5)
       print("Doge_DB: ", str(users))
       # if user_id in users['user_id']:
