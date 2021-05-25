@@ -28,6 +28,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
    message_cont = message.content
+   print(message_cont)
 
   
 # @bot.command(name='chess', description="ChessBot")
