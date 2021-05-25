@@ -125,6 +125,7 @@ async def ltc(ctx):
 
 @bot.command(name='setmydoge', description="Set the number of doge you have")
 async def setmydoge(ctx):
+   message_cont = ctx.message.content
    msg_splitted = message_cont.split()
    msg_len = len(msg_splitted)
    user_id = '<@!' + str(ctx.author.id) + '>'
@@ -286,11 +287,6 @@ async def embed(ctx):
     embed.add_field(name="Secrets", value="||Surround your text with double pipes (\|\|)||", inline=False)
     embed.set_footer(text="Learn more here: realdrewdata.medium.com")
     await ctx.send(embed=embed)
-
-
-@bot.command(name='test')
-async def test(ctx):
-   print(ctx.message.content)
 
 
 bot.run(os.environ['TOKEN'])
