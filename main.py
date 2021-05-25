@@ -128,7 +128,7 @@ async def setmydoge(ctx):
    message_cont = ctx.message.content
    msg_splitted = message_cont.split()
    msg_len = len(msg_splitted)
-   user_id = '<@!' + str(ctx.author.id) + '>'
+   user_id = '@!' + str(ctx.author.id)
    print(user_id)
    print (msg_len)
    if msg_len >= 2:
@@ -142,7 +142,7 @@ async def setmydoge(ctx):
       print(users)
       if users != None:
          coins_set = users["amount"]
-         doge_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount": str(msg_intted)})
+         doge_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" : str(msg_intted)})
          await ctx.channel.send("Doge Coins Updated Successfully for `" + user_id + "`")
       elif users == None:
          #add user in users
