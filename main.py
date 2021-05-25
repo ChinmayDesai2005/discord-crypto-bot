@@ -21,7 +21,7 @@ doge_db = mongodb.doge
 bat_db = mongodb.bat
 ltc_db = mongodb.ltc
 
-def check_time:
+def check_time():
    t = time.localtime()
    current_time = time.strgtime("%H:%M:%S - %d,%m,%y")
    return current_time
