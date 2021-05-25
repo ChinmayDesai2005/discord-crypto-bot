@@ -138,15 +138,17 @@ async def setmydoge(ctx):
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
       users = doge_db.find_one({"user_id": user_id})
-      time.sleep(0.5)
+      time.sleep(0.4)
       print(users)
       if users != None:
          coins_set = users["amount"]
          doge_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" : str(msg_intted)})
          await ctx.channel.send("Doge Coins Updated Successfully for " + user_id)
       elif users == None:
-         #add user in users
-         print("The User ain't in our books")
+         new_user = {"user_id": user_id, "amount": msg_intted}
+         doge_db.insert_one(new_user)
+         time.sleep(0.2)
+         await ctx.channel.send("Doge Coins Updated Successfully for New User(new user is temp): " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
 
