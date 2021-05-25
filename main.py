@@ -115,7 +115,7 @@ async def doge(ctx):
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xba9f33)
-   embed.set_author(name="Doge Coin Value", icon_url="https://i.imgur.com/z1FHjgP.png")
+   embed.set_author(name="Dogecoin", icon_url="https://i.imgur.com/z1FHjgP.png")
    embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
    await ctx.channel.send(embed=embed)
 
@@ -128,7 +128,7 @@ async def bat(ctx):
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xFF5000)
-   embed.set_author(name="BAT Value", icon_url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
+   embed.set_author(name="BAT", icon_url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
    embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
    await ctx.channel.send(embed=embed)
 
@@ -138,9 +138,10 @@ async def ltc(ctx):
    ticker_buy = response['ticker']['buy']
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
+   time_now = check_time()
    embed = discord.Embed(
    color = 	0x345D9D)
-   embed.set_author(name="LTC Value", icon_url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
+   embed.set_author(name="Litecoin", icon_url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
    embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
    await ctx.channel.send(embed=embed)
 
