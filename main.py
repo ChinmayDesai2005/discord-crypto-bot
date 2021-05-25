@@ -21,6 +21,10 @@ doge_db = mongodb.doge
 bat_db = mongodb.bat
 ltc_db = mongodb.ltc
 
+post = {"user":{"user_id": "<@!583525143385604117>", "amount": "16.0676"}}
+doge_db.insert_one(post)
+
+
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
@@ -139,7 +143,7 @@ async def setmydoge(ctx):
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
       users = doge_db.find_one({"user_id" : user_id})
       time.sleep(0.5)
-      print(users)
+      print("Doge_DB: ", str(users))
       if user_id in users['user_id']:
          for idx, user in enumerate(users['user_id']):
             if user_id == user:
