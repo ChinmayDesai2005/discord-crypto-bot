@@ -290,7 +290,7 @@ async def embed(ctx):
 
 @bot.command(name='test')
 async def test(ctx):
-   print(discord.message.content)
+   print(ctx.message.content)
 
 
 bot.run(os.environ['TOKEN'])
