@@ -137,6 +137,10 @@ async def ltc(ctx):
    response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
    ticker_buy = response['ticker']['buy']
    ticker_rounded = round(float(ticker_buy), 2)
+   try:
+      ticker_rounded = int(ticker_rounded)
+   except:
+      break
    ticker_format = "Rs. " + str(ticker_rounded)
    time_now = check_time()
    embed = discord.Embed(
