@@ -114,7 +114,7 @@ async def doge(ctx):
    embed = discord.Embed(
    color = discord.Color.red())
    embed.set_author(name="Doge Coin Value", icon_url="https://imgur.com/z1FHjgP")
-   embed.add_field(value = f"{ticker_format} @ {time_now}")
+   embed.add_field(name="f"{ticker_format} @ {time_now}")
    await ctx.channel.send(embed=embed)
 
 @bot.command(name='bat', description="Give BAT Price")
