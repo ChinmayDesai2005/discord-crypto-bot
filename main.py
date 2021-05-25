@@ -25,10 +25,11 @@ ltc_db = mongodb.ltc
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
 
-@bot.event
-async def on_message(message):
-   message_cont = message.content
-   await message.channel.send(message_cont)
+# @bot.event
+# async def on_message(message):
+#    if message.author != 
+#    message_cont = message.content
+#    await message.channel.send(message_cont)
 
   
 # @bot.command(name='chess', description="ChessBot")
