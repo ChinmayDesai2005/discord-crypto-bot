@@ -27,9 +27,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-   if message.author.id != client.user.id:
-      message_cont = message.content
-      await message.channel.send(message_cont)
+   message_cont = message.content
 
   
 # @bot.command(name='chess', description="ChessBot")
