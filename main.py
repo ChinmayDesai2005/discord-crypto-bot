@@ -28,7 +28,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
    message_cont = message.content
-   await ctx.channel.send(message_cont)
+   await message.channel.send(message_cont)
 
   
 # @bot.command(name='chess', description="ChessBot")
