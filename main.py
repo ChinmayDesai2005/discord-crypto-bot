@@ -23,7 +23,7 @@ ltc_db = mongodb.ltc
 
 def check_time():
    t = time.localtime()
-   current_time = time.strgtime("%H:%M:%S - %d,%m,%y")
+   current_time = time.strftime("%H:%M:%S - %d,%m,%y")
    return current_time
 
 @bot.event
