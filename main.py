@@ -24,12 +24,6 @@ ltc_db = mongodb.ltc
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
-
-@bot.event
-async def on_message(message):
-   message_cont = message.content
-   print(message_cont)
-
   
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
@@ -292,6 +286,11 @@ async def embed(ctx):
     embed.add_field(name="Secrets", value="||Surround your text with double pipes (\|\|)||", inline=False)
     embed.set_footer(text="Learn more here: realdrewdata.medium.com")
     await ctx.send(embed=embed)
+
+
+@bot.command(name='test')
+async def test(ctx):
+   print(ctx.content)
 
 
 bot.run(os.environ['TOKEN'])
