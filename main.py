@@ -141,29 +141,29 @@ async def setmydoge(ctx):
          msg_intted = float(msg_splitted[1])
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
-      users = doge_db.find_one({"user_id" : user_id})
+      users = doge_db.find_one("user"["user_id": user_id])
       time.sleep(0.5)
       print("Doge_DB: ", str(users))
-      if user_id in users['user_id']:
-         for idx, user in enumerate(users['user_id']):
-            if user_id == user:
-               # doge_to_be_replaced = user + ' - ' + users['coins'][idx]
-               # doge_replace =  str(user_id) + ' - ' + str(msg_intted)
-               # fin = open('doge.txt', 'r')
-               # file = fin.read()
-               # file = file.replace(doge_to_be_replaced, doge_replace)
-               # fin.close()
-               # fout = open('doge.txt', 'w')
-               # fout.write(file)
-               # fout.close()
-               #replace_one
-               await ctx.channel.send("Doge coins updated for " + str(user_id))
-      elif user_id not in users['user_id']:
-         # with open('doge.txt', 'a') as f:
-         #    f.write(str(user_id) + " - " + str(msg_intted) + "\n")
-         #    f.close()
-         # add_one
-         await ctx.channel.send("Doge Coins Updated Successfully")
+      # if user_id in users['user_id']:
+      #    for idx, user in enumerate(users['user_id']):
+      #       if user_id == user:
+      #          # doge_to_be_replaced = user + ' - ' + users['coins'][idx]
+      #          # doge_replace =  str(user_id) + ' - ' + str(msg_intted)
+      #          # fin = open('doge.txt', 'r')
+      #          # file = fin.read()
+      #          # file = file.replace(doge_to_be_replaced, doge_replace)
+      #          # fin.close()
+      #          # fout = open('doge.txt', 'w')
+      #          # fout.write(file)
+      #          # fout.close()
+      #          #replace_one
+      #          await ctx.channel.send("Doge coins updated for " + str(user_id))
+      # elif user_id not in users['user_id']:
+      #    # with open('doge.txt', 'a') as f:
+      #    #    f.write(str(user_id) + " - " + str(msg_intted) + "\n")
+      #    #    f.close()
+      #    # add_one
+      #    await ctx.channel.send("Doge Coins Updated Successfully")
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
 
