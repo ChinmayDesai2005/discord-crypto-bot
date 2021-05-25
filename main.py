@@ -110,7 +110,7 @@ async def doge(ctx):
    ticker_buy = response['ticker']['buy']
    ticker_rounded = round(float(ticker_buy), 2)
    ticker_format = "Rs. " + str(ticker_rounded)
-   time_now = current_time()
+   time_now = check_time()
    embed = discord.Embed(
    color = discord.Color.red())
    embed.add_field(name="Doge Coin Value", value = f"{ticker_format} @ {current_time}")
