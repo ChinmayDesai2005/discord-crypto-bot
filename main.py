@@ -140,7 +140,7 @@ async def ltc(ctx):
    try:
       ticker_rounded = int(ticker_rounded)
    except:
-      break
+      pass
    ticker_format = "Rs. " + str(ticker_rounded)
    time_now = check_time()
    embed = discord.Embed(
