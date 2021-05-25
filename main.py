@@ -201,7 +201,7 @@ async def mydoge(ctx):
    ticker_usd = response_usd['ticker']['buy']
    user_id = '<@!' + str(message.author.id) + '>'
    coins_show = doge_db.find_one({"user_id": user_id})
-   if coins_show != None
+   if coins_show != None:
       user_doge = coins_show["amount"]
       doge_inr = float(user_doge) * float(ticker_inr)
       doge_usd = float(user_doge) * float(ticker_usd)
