@@ -33,7 +33,7 @@ def int_check(amount):
       amount = int(amount)
       print(amount)
    else:
-      pass
+      print("This isnt Happening")
 
 @bot.event
 async def on_ready():
