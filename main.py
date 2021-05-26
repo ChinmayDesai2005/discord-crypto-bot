@@ -36,6 +36,13 @@ def int_check(amount):
       amount = f"{amount:.2f}"
       return amount
 
+def coin_int(amount):
+   if amount - int(amount) == 0.0:
+      amount = int(amount)
+      return amount
+   else:
+      return amount
+
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
@@ -274,8 +281,12 @@ async def mydoge(ctx):
       user_doge = coins_show["amount"]
       doge_inr = float(user_doge) * float(ticker_inr)
       doge_usd = float(user_doge) * float(ticker_usd)
-      doge_formatted = "You have " + str(user_doge) + " dogecoins \nIts value in **INR** is ₹ " + str(round(doge_inr, 4)) + "\nIts value in **USD** is $ " + str(round(doge_usd, 4))
-      await ctx.channel.send(doge_formatted)
+      embed = discord.Embed(color = 0xba9f33)
+      doge_formatted = str(coin_int(float(user_doge))) + " Dogecoins \n₹" + str(round(doge_inr, 2)) + "\n$" + str(round(doge_usd, 2))
+      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+      embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
+      embed.add_field(name=doge_formatted, value=check_time())
+      await ctx.channel.send(embed=embed)
    else:
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
 
@@ -291,8 +302,13 @@ async def mybat(ctx):
       user_bat = coins_show["amount"]
       bat_inr = float(user_bat) * float(ticker_inr)
       bat_usd = float(user_bat) * float(ticker_usd)
-      bat_formatted = "You have " + str(user_bat) + " BAT \nIts value in **INR** is ₹ " + str(round(bat_inr, 4)) + "\nIts value in **USD** is $ " + str(round(bat_usd, 4))
-      await ctx.channel.send(bat_formatted)
+      embed = discord.Embed(
+      color = 	0xFF5000)
+      bat_formatted = str(coin_int(float(user_bat))) + " BAT \n₹" + str(round(bat_inr, 2)) + "\n$" + str(round(bat_usd, 2))
+      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+      embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
+      embed.add_field(name=bat_formatted, value=check_time())
+      await ctx.channel.send(embed=embed)
    else:
       await ctx.channel.send("You do not have a Account. Please register by `~setmybat <no. of BAT>`")
 
@@ -308,8 +324,13 @@ async def myltc(ctx):
       user_ltc = coins_show["amount"]
       ltc_inr = float(user_ltc) * float(ticker_inr)
       ltc_usd = float(user_ltc) * float(ticker_usd)
-      ltc_formatted = "You have " + str(user_ltc) + " LTC \nIts value in **INR** is ₹ " + str(round(ltc_inr, 4)) + "\nIts value in **USD** is $ " + str(round(ltc_usd, 4))
-      await ctx.channel.send(ltc_formatted)
+      embed=discord.Embed(
+      color = 	0x345D9D)
+      ltc_formatted = str(coin_int(float(user_ltc))) + " LTC \n₹" + str(round(ltc_inr, 2)) + "\n$" + str(round(ltc_usd, 2))
+      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+      embed.set_thumbnail(url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
+      embed.add_field(name=ltc_formatted, value=check_time())
+      await ctx.channel.send(embed=embed)
    else:
       await ctx.channel.send("You do not have a Account. Please register by `~setmyltc <no. of LTC>`")
 
