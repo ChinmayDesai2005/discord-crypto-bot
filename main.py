@@ -144,19 +144,24 @@ async def bat(ctx):
 
 @bot.command(name='ltc', description="Give LTC Price")
 async def ltc(ctx):
-   response = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
-   ticker_buy = response['ticker']['buy']
-   ticker_rounded = round(float(ticker_buy), 2)
+   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
+   ticker_buy_inr = response_inr['ticker']['buy']
+   ticker_rounded_inr = round(float(ticker_buy_inr), 2)
    try:
-      ticker_rounded = int(ticker_rounded)
+      ticker_rounded_inr = int(ticker_rounded_inr)
    except:
       pass
-   ticker_format = "Rs. " + str(ticker_rounded)
+   ticker_format_inr = "₹" + str(ticker_rounded_inr)
+   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/ltcusdt.json").json()
+   ticker_buy_usd = response_usd['ticker']['buy']
+   ticker_rounded_usd = round(float(ticker_buy_usd), 2)
+   ticker_format_usd = "$" + str(ticker_rounded_usd)
    time_now = check_time()
    embed = discord.Embed(
    color = 	0x345D9D)
-   embed.set_author(name="Litecoin", icon_url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
-   embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
+   embed.set_author(name="Litecoin")
+   embed.add_field(name= f"{ticker_format_inr}\n{ticker_format_usd}", value = f"{time_now}")
+   embed.set_thumbnail(url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
    await ctx.channel.send(embed=embed)
 
 @bot.command(name='setmydoge', description="Set the number of doge you have")
