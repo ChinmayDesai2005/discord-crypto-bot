@@ -282,7 +282,7 @@ async def mydoge(ctx):
       doge_inr = float(user_doge) * float(ticker_inr)
       doge_usd = float(user_doge) * float(ticker_usd)
       embed = discord.Embed(color = 0xba9f33)
-      doge_formatted = str(coin_int(float(user_doge))) + " Dogecoins \n₹" + str(round(doge_inr, 2)) + "\n$" + str(round(doge_usd, 2))
+      doge_formatted = str(coin_int(float(user_doge))) + " Dogecoins \n₹" + str(int_check(doge_inr)) + "\n$" + str(int_check(doge_usd))
       embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
       embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
       embed.add_field(name=doge_formatted, value=check_time())
@@ -304,7 +304,7 @@ async def mybat(ctx):
       bat_usd = float(user_bat) * float(ticker_usd)
       embed = discord.Embed(
       color = 	0xFF5000)
-      bat_formatted = str(coin_int(float(user_bat))) + " BAT \n₹" + str(round(bat_inr, 2)) + "\n$" + str(round(bat_usd, 2))
+      bat_formatted = str(coin_int(float(user_bat))) + " BAT \n₹" + str(int_check(bat_inr)) + "\n$" + str(int_check(bat_usd))
       embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
       embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
       embed.add_field(name=bat_formatted, value=check_time())
@@ -326,7 +326,7 @@ async def myltc(ctx):
       ltc_usd = float(user_ltc) * float(ticker_usd)
       embed=discord.Embed(
       color = 	0x345D9D)
-      ltc_formatted = str(coin_int(float(user_ltc))) + " LTC \n₹" + str(round(ltc_inr, 2)) + "\n$" + str(round(ltc_usd, 2))
+      ltc_formatted = str(coin_int(float(user_ltc))) + " LTC \n₹" + str(int_check(ltc_inr)) + "\n$" + str(int_check(ltc_usd))
       embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
       embed.set_thumbnail(url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
       embed.add_field(name=ltc_formatted, value=check_time())
