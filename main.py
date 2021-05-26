@@ -31,6 +31,7 @@ def check_time():
 def int_check(amount):
    if amount - int(amount) == 0.0:
       amount = int(amount)
+      print(amount)
    else:
       pass
 
