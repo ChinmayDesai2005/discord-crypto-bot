@@ -114,7 +114,7 @@ async def doge(ctx):
    ticker_format_inr = "Rs. " + str(ticker_rounded_inr)
    response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
    ticker_buy_usd = response_usd['ticker']['buy']
-   ticker_rounded_usd = round(float(ticker_buy_usdr), 2)
+   ticker_rounded_usd = round(float(ticker_buy_usd), 2)
    ticker_format_usd = "$ " + str(ticker_rounded_usd)
    time_now = check_time()
    embed = discord.Embed(
