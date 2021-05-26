@@ -111,10 +111,18 @@ async def doge(ctx):
    response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
    ticker_buy_inr = response_inr['ticker']['buy']
    ticker_rounded_inr = round(float(ticker_buy_inr), 2)
+   try:
+      ticker_rounded_inr = int(ticker_rounded_inr)
+   except:
+      pass
    ticker_format_inr = "₹" + str(ticker_rounded_inr)
    response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
    ticker_buy_usd = response_usd['ticker']['buy']
    ticker_rounded_usd = round(float(ticker_buy_usd), 2)
+   try:
+      ticker_rounded_usd = int(ticker_rounded_usd)
+   except:
+      pass
    ticker_format_usd = "$" + str(ticker_rounded_usd)
    time_now = check_time()
    embed = discord.Embed(
@@ -129,10 +137,18 @@ async def bat(ctx):
    response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
    ticker_buy_inr = response_inr['ticker']['buy']
    ticker_rounded_inr = round(float(ticker_buy_inr), 2)
+   try:
+      ticker_rounded_inr = int(ticker_rounded_inr)
+   except:
+      pass
    ticker_format_inr = "₹" + str(ticker_rounded_inr)
    response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
    ticker_buy_usd = response_usd['ticker']['buy']
    ticker_rounded_usd = round(float(ticker_buy_usd), 2)
+   try:
+      ticker_rounded_usd = int(ticker_rounded_usd)
+   except:
+      pass
    ticker_format_usd = "$" + str(ticker_rounded_usd)
    time_now = check_time()
    embed = discord.Embed(
@@ -155,6 +171,10 @@ async def ltc(ctx):
    response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/ltcusdt.json").json()
    ticker_buy_usd = response_usd['ticker']['buy']
    ticker_rounded_usd = round(float(ticker_buy_usd), 2)
+   try:
+      ticker_rounded_usd = int(ticker_rounded_usd)
+   except:
+      pass
    ticker_format_usd = "$" + str(ticker_rounded_usd)
    time_now = check_time()
    embed = discord.Embed(
