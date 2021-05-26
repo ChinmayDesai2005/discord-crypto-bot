@@ -111,29 +111,35 @@ async def doge(ctx):
    response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
    ticker_buy_inr = response_inr['ticker']['buy']
    ticker_rounded_inr = round(float(ticker_buy_inr), 2)
-   ticker_format_inr = "Rs. " + str(ticker_rounded_inr)
+   ticker_format_inr = "₹" + str(ticker_rounded_inr)
    response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
    ticker_buy_usd = response_usd['ticker']['buy']
    ticker_rounded_usd = round(float(ticker_buy_usd), 2)
-   ticker_format_usd = "$ " + str(ticker_rounded_usd)
+   ticker_format_usd = "$" + str(ticker_rounded_usd)
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xba9f33)
-   embed.set_author(name="Dogecoin", icon_url="https://i.imgur.com/z1FHjgP.png")
+   embed.set_author(name="Dogecoin")
    embed.add_field(name= f"{ticker_format_inr}\n{ticker_format_usd}", value = f"{time_now}")
+   embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
    await ctx.channel.send(embed=embed)
 
 @bot.command(name='bat', description="Give BAT Price")
 async def bat(ctx):
-   response = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
-   ticker_buy = response['ticker']['buy']
-   ticker_rounded = round(float(ticker_buy), 2)
-   ticker_format = "Rs. " + str(ticker_rounded)
+   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
+   ticker_buy_inr = response_inr['ticker']['buy']
+   ticker_rounded_inr = round(float(ticker_buy_inr), 2)
+   ticker_format_inr = "₹" + str(ticker_rounded_inr)
+   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
+   ticker_buy_usd = response_usd['ticker']['buy']
+   ticker_rounded_usd = round(float(ticker_buy_usd), 2)
+   ticker_format_usd = "$" + str(ticker_rounded_usd)
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xFF5000)
-   embed.set_author(name="BAT", icon_url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
-   embed.add_field(name= f"{ticker_format}", value = f"{time_now}")
+   embed.set_author(name="Basic Attention Token")
+   embed.add_field(name= f"{ticker_format_inr}\n{ticker_format_usd}", value = f"{time_now}")
+   embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
    await ctx.channel.send(embed=embed)
 
 @bot.command(name='ltc', description="Give LTC Price")
