@@ -46,6 +46,7 @@ def coin_int(amount):
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
+  await bot.change_presence(activity=discord.ActivityType.watching, name="Crypto Prices")
   
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
