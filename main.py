@@ -44,6 +44,7 @@ def coin_int(amount):
    else:
       return amount
 
+
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
@@ -125,16 +126,20 @@ async def on_ready():
 
 @bot.command(name='doge', description="Give DogeCoin Price")
 async def doge(ctx):
-   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
-   ticker_buy_inr = response_inr['ticker']['buy']
-   ticker_rounded_inr = round(float(ticker_buy_inr), 2)
-   ticker_rounded_inr = int_check(ticker_rounded_inr)
-   ticker_format_inr = "₹" + str(ticker_rounded_inr)
-   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
-   ticker_buy_usd = response_usd['ticker']['buy']
-   ticker_rounded_usd = round(float(ticker_buy_usd), 2)
-   ticker_rounded_usd = int_check(ticker_rounded_usd)
-   ticker_format_usd = "$" + str(ticker_rounded_usd)
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      crypto_values.append(ticker_rounded)
+   
+   crypto_values = []
+   inputs = ["https://api.wazirx.com/api/v2/tickers/dogeinr.json",
+   "https://api.wazirx.com/api/v2/tickers/dogeusdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = "₹" + str(crypto_values[0])
+   ticker_format_usd = "$" + str(crypto_values[1])
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xba9f33)
@@ -145,16 +150,20 @@ async def doge(ctx):
 
 @bot.command(name='bat', description="Give BAT Price")
 async def bat(ctx):
-   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
-   ticker_buy_inr = response_inr['ticker']['buy']
-   ticker_rounded_inr = round(float(ticker_buy_inr), 2)
-   ticker_rounded_inr = int_check(ticker_rounded_inr)
-   ticker_format_inr = "₹" + str(ticker_rounded_inr)
-   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
-   ticker_buy_usd = response_usd['ticker']['buy']
-   ticker_rounded_usd = round(float(ticker_buy_usd), 2)
-   ticker_rounded_usd = int_check(ticker_rounded_usd)
-   ticker_format_usd = "$" + str(ticker_rounded_usd)
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      crypto_values.append(ticker_rounded)
+   
+   crypto_values = []
+   inputs = ["https://api.wazirx.com/api/v2/tickers/batinr.json",
+   "https://api.wazirx.com/api/v2/tickers/batusdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = "₹" + str(crypto_values[0])
+   ticker_format_usd = "$" + str(crypto_values[1])
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xFF5000)
@@ -165,16 +174,20 @@ async def bat(ctx):
 
 @bot.command(name='ltc', description="Give LTC Price")
 async def ltc(ctx):
-   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
-   ticker_buy_inr = response_inr['ticker']['buy']
-   ticker_rounded_inr = round(float(ticker_buy_inr), 2)
-   ticker_rounded_inr = int_check(ticker_rounded_inr)
-   ticker_format_inr = "₹" + str(ticker_rounded_inr)
-   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/ltcusdt.json").json()
-   ticker_buy_usd = response_usd['ticker']['buy']
-   ticker_rounded_usd = round(float(ticker_buy_usd), 2)
-   ticker_rounded_usd = int_check(ticker_rounded_usd)
-   ticker_format_usd = "$" + str(ticker_rounded_usd)
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      crypto_values.append(ticker_rounded)
+   
+   crypto_values = []
+   inputs = ["https://api.wazirx.com/api/v2/tickers/ltcinr.json",
+   "https://api.wazirx.com/api/v2/tickers/ltcusdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = "₹" + str(crypto_values[0])
+   ticker_format_usd = "$" + str(crypto_values[1])
    time_now = check_time()
    embed = discord.Embed(
    color = 	0x345D9D)
@@ -355,7 +368,6 @@ async def testapi(ctx):
       value = round(float(buy), 2)
       crypto_values.append(value)
       
-   start = time()
    crypto_values = []
    inputs = ["https://api.wazirx.com/api/v2/tickers/batusdt.json",
    "https://api.wazirx.com/api/v2/tickers/batinr.json"]
@@ -363,7 +375,6 @@ async def testapi(ctx):
    with ThreadPoolExecutor(2) as thread_pool:
       results = thread_pool.map(request, inputs)
 
-   duration = time() - start
    await ctx.channel.send(str(crypto_values))
 
 bot.run(os.environ['TOKEN'])
