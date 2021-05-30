@@ -137,7 +137,6 @@ async def doge(ctx):
          crypto_values["valueinr"].append(ticker_rounded)
       elif link_split[-1] == "dogeusdt.json":
          crypto_values["valueusd"].append(ticker_rounded)
-      print(crypto_values)
       
    
    crypto_values = {"valueinr": [], "valueusd": []}
@@ -166,15 +165,23 @@ async def bat(ctx):
       ticker_buy = response['ticker']['buy']
       ticker_rounded = round(float(ticker_buy), 2)
       ticker_rounded = int_check(ticker_rounded)
-      crypto_values.append(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "batinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "batusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
    
-   crypto_values = []
+   crypto_values = {"valueinr": [], "valueusd": []}
    inputs = ["https://api.wazirx.com/api/v2/tickers/batinr.json",
    "https://api.wazirx.com/api/v2/tickers/batusdt.json"]
    with ThreadPoolExecutor(2) as thread_pool:
       results = thread_pool.map(jsonconvert, inputs)
-   ticker_format_inr = "₹" + str(crypto_values[0])
-   ticker_format_usd = "$" + str(crypto_values[1])
+   ticker_format_inr = "₹" + str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_format_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = "$" + str(crypto_values["valueusd"])
+   str_remove = "[\[\'\]]"
+   ticker_format_usd = re.sub(str_remove, "", ticker_format_usd)
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xFF5000)
@@ -190,15 +197,23 @@ async def ltc(ctx):
       ticker_buy = response['ticker']['buy']
       ticker_rounded = round(float(ticker_buy), 2)
       ticker_rounded = int_check(ticker_rounded)
-      crypto_values.append(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "ltcinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "ltcusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
    
-   crypto_values = []
+   crypto_values = {"valueinr": [], "valueusd": []}
    inputs = ["https://api.wazirx.com/api/v2/tickers/ltcinr.json",
    "https://api.wazirx.com/api/v2/tickers/ltcusdt.json"]
    with ThreadPoolExecutor(2) as thread_pool:
       results = thread_pool.map(jsonconvert, inputs)
-   ticker_format_inr = "₹" + str(crypto_values[0])
-   ticker_format_usd = "$" + str(crypto_values[1])
+   ticker_format_inr = "₹" + str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_format_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = "$" + str(crypto_values["valueusd"])
+   str_remove = "[\[\'\]]"
+   ticker_format_usd = re.sub(str_remove, "", ticker_format_usd)
    time_now = check_time()
    embed = discord.Embed(
    color = 	0x345D9D)
