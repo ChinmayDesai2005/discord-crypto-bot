@@ -6,6 +6,7 @@ import discord
 from concurrent.futures import ThreadPoolExecutor
 import pprint
 import os
+import re
 import time
 from discord.ext import commands
 from pymongo import MongoClient
@@ -131,15 +132,25 @@ async def doge(ctx):
       ticker_buy = response['ticker']['buy']
       ticker_rounded = round(float(ticker_buy), 2)
       ticker_rounded = int_check(ticker_rounded)
-      crypto_values.append(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "dogeinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "dogeusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
+      print(crypto_values)
+      
    
-   crypto_values = []
+   crypto_values = {"valueinr": [], "valueusd": []}
    inputs = ["https://api.wazirx.com/api/v2/tickers/dogeinr.json",
    "https://api.wazirx.com/api/v2/tickers/dogeusdt.json"]
    with ThreadPoolExecutor(2) as thread_pool:
       results = thread_pool.map(jsonconvert, inputs)
-   ticker_format_inr = "₹" + str(crypto_values[0])
-   ticker_format_usd = "$" + str(crypto_values[1])
+   ticker_format_inr = "₹" + str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_format_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = "$" + str(crypto_values["valueusd"])
+   str_remove = "[\[\'\]]"
+   ticker_format_usd = re.sub(str_remove, "", ticker_format_usd)
    time_now = check_time()
    embed = discord.Embed(
    color = 	0xba9f33)
