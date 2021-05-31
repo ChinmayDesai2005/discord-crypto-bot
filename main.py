@@ -312,10 +312,27 @@ async def setmyltc(ctx):
 
 @bot.command(name='mydoge')
 async def mydoge(ctx):
-   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/dogeinr.json").json()
-   ticker_inr = response_inr['ticker']['buy']
-   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/dogeusdt.json").json()
-   ticker_usd = response_usd['ticker']['buy']
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "dogeinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "dogeusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
+   
+   crypto_values = {"valueinr": [], "valueusd": []}
+   inputs = ["https://api.wazirx.com/api/v2/tickers/dogeinr.json",
+   "https://api.wazirx.com/api/v2/tickers/dogeusdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = str(crypto_values["valueusd"])
+   ticker_usd = re.sub(str_remove, "", ticker_format_usd)
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = doge_db.find_one({"user_id": user_id})
    if coins_show != None:
@@ -333,32 +350,64 @@ async def mydoge(ctx):
 
 @bot.command(name='mybat')
 async def mybat(ctx):
-   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/batinr.json").json()
-   ticker_inr = response_inr['ticker']['buy']
-   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/batusdt.json").json()
-   ticker_usd = response_usd['ticker']['buy']
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "batinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "batusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
+   
+   crypto_values = {"valueinr": [], "valueusd": []}
+   inputs = ["https://api.wazirx.com/api/v2/tickers/batinr.json",
+   "https://api.wazirx.com/api/v2/tickers/batusdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = str(crypto_values["valueusd"])
+   ticker_usd = re.sub(str_remove, "", ticker_format_usd)
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = bat_db.find_one({"user_id": user_id})
    if coins_show != None:
       user_bat = coins_show["amount"]
       bat_inr = float(user_bat) * float(ticker_inr)
       bat_usd = float(user_bat) * float(ticker_usd)
-      embed = discord.Embed(
-      color = 	0xFF5000)
-      bat_formatted = str(coin_int(float(user_bat))) + " BAT \n₹" + str(int_check(bat_inr)) + "\n$" + str(int_check(bat_usd))
+      embed = discord.Embed(color = 0xFF5000)
+      doge_formatted = str(coin_int(float(user_bat))) + " BAT\n₹" + str(int_check(bat_inr)) + "\n$" + str(int_check(bat_usd))
       embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
       embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
-      embed.add_field(name=bat_formatted, value=check_time())
+      embed.add_field(name=doge_formatted, value=check_time())
       await ctx.channel.send(embed=embed)
    else:
-      await ctx.channel.send("You do not have a Account. Please register by `~setmybat <no. of BAT>`")
-
+      await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
 @bot.command(name='myltc')
 async def myltc(ctx):
-   response_inr = requests.get("https://api.wazirx.com/api/v2/tickers/ltcinr.json").json()
-   ticker_inr = response_inr['ticker']['buy']
-   response_usd = requests.get("https://api.wazirx.com/api/v2/tickers/ltcusdt.json").json()
-   ticker_usd = response_usd['ticker']['buy']
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "ltcinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "ltcusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
+   
+   crypto_values = {"valueinr": [], "valueusd": []}
+   inputs = ["https://api.wazirx.com/api/v2/tickers/ltcinr.json",
+   "https://api.wazirx.com/api/v2/tickers/ltcusdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = str(crypto_values["valueusd"])
+   ticker_usd = re.sub(str_remove, "", ticker_format_usd)
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = ltc_db.find_one({"user_id": user_id})
    if coins_show != None:
@@ -388,20 +437,43 @@ async def hello(ctx):
 
 @bot.command(name="testapi", description="This is testing api fetch speed")
 async def testapi(ctx):
-   def request(link):
+   def jsonconvert(link):
       response = requests.get(link).json()
-      buy = response["ticker"]["buy"]
-      value = round(float(buy), 2)
-      crypto_values.append(value)
-      
-   crypto_values = []
-   inputs = ["https://api.wazirx.com/api/v2/tickers/batusdt.json",
-   "https://api.wazirx.com/api/v2/tickers/batinr.json"]
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "dogeinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "dogeusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
    
+   crypto_values = {"valueinr": [], "valueusd": []}
+   inputs = ["https://api.wazirx.com/api/v2/tickers/dogeinr.json",
+   "https://api.wazirx.com/api/v2/tickers/dogeusdt.json"]
    with ThreadPoolExecutor(2) as thread_pool:
-      results = thread_pool.map(request, inputs)
-
-   await ctx.channel.send(str(crypto_values))
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = str(crypto_values["valueusd"])
+   ticker_usd = re.sub(str_remove, "", ticker_format_usd)
+   print(ticker_inr + "\n" + ticker_usd)
+   user_id = '<@!' + str(ctx.author.id) + '>'
+   coins_show = doge_db.find_one({"user_id": user_id})
+   if coins_show != None:
+      user_doge = coins_show["amount"]
+      doge_inr = float(user_doge) * float(ticker_inr)
+      doge_usd = float(user_doge) * float(ticker_usd)
+      embed = discord.Embed(color = 0xba9f33)
+      print(str(doge_inr) + "\n" + str(doge_usd) + "\n" + str(user_doge))
+      doge_formatted = str(coin_int(float(user_doge))) + " Dogecoins \n₹" + str(int_check(doge_inr)) + "\n$" + str(int_check(doge_usd))
+      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+      embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
+      embed.add_field(name=doge_formatted, value=check_time())
+      await ctx.channel.send(embed=embed)
+   else:
+      await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
 
 bot.run(os.environ['TOKEN'])
 
