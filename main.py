@@ -437,43 +437,7 @@ async def hello(ctx):
 
 @bot.command(name="testapi", description="This is testing api fetch speed")
 async def testapi(ctx):
-   def jsonconvert(link):
-      response = requests.get(link).json()
-      ticker_buy = response['ticker']['buy']
-      ticker_rounded = round(float(ticker_buy), 2)
-      ticker_rounded = int_check(ticker_rounded)
-      link_split = link.split("/")
-      if link_split[-1] == "dogeinr.json":
-         crypto_values["valueinr"].append(ticker_rounded)
-      elif link_split[-1] == "dogeusdt.json":
-         crypto_values["valueusd"].append(ticker_rounded)
-   
-   crypto_values = {"valueinr": [], "valueusd": []}
-   inputs = ["https://api.wazirx.com/api/v2/tickers/dogeinr.json",
-   "https://api.wazirx.com/api/v2/tickers/dogeusdt.json"]
-   with ThreadPoolExecutor(2) as thread_pool:
-      results = thread_pool.map(jsonconvert, inputs)
-   ticker_format_inr = str(crypto_values["valueinr"])
-   str_remove = "[\[\'\]]"
-   ticker_inr = re.sub(str_remove, "", ticker_format_inr)
-   ticker_format_usd = str(crypto_values["valueusd"])
-   ticker_usd = re.sub(str_remove, "", ticker_format_usd)
-   print(ticker_inr + "\n" + ticker_usd)
-   user_id = '<@!' + str(ctx.author.id) + '>'
-   coins_show = doge_db.find_one({"user_id": user_id})
-   if coins_show != None:
-      user_doge = coins_show["amount"]
-      doge_inr = float(user_doge) * float(ticker_inr)
-      doge_usd = float(user_doge) * float(ticker_usd)
-      embed = discord.Embed(color = 0xba9f33)
-      print(str(doge_inr) + "\n" + str(doge_usd) + "\n" + str(user_doge))
-      doge_formatted = str(coin_int(float(user_doge))) + " Dogecoins \n₹" + str(int_check(doge_inr)) + "\n$" + str(int_check(doge_usd))
-      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
-      embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
-      embed.add_field(name=doge_formatted, value=check_time())
-      await ctx.channel.send(embed=embed)
-   else:
-      await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
+   await ctx.channel.send(f"Dont use that word <@!{ctx.author.id}>! ", delete_after=5)
 
 bot.run(os.environ['TOKEN'])
 
