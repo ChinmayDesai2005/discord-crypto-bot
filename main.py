@@ -50,7 +50,14 @@ def coin_int(amount):
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
   await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Crypto Prices"))
-  
+
+@bot.event
+async def on_message(message):
+   message_content = message.content.lower()
+   if message.author != bot.user:
+      if message_content == "mhm":
+         await message.channel.send("mhm")
+
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
 #    final_lst = []
