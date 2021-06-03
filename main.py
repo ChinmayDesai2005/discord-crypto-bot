@@ -50,6 +50,7 @@ def coin_int(amount):
 @bot.event
 async def on_ready():
   print('We have logged in as {0.user}'.format(bot));
+  DiscordComponents(bot)
   await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Crypto Prices"))
 
 @bot.event
@@ -451,7 +452,7 @@ async def testapi(ctx):
 
 @bot.command(name="testbuttons")
 async def testbuttons(ctx):
-   await ctx.send("Context",components=[Button(style=ButtonStyle.blue, label="Test")]) #Blue button with button label of "Test"
+   await ctx.channel.send("Context", components = [Button(style=ButtonStyle.blue, label="Test")]) #Blue button with button label of "Test"
    res = await self.client.wait_for("button_click") #Wait for button to be clicked
    await res.respond(type=InteractionType.ChannelMessageWithSource, content=f'Button Clicked') #Responds to the button click by printing out a message only user can see #In our case, its "Button Clicked"
 
