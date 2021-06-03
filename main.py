@@ -449,18 +449,6 @@ async def hello(ctx):
 async def testapi(ctx):
    await ctx.channel.send(f"Dont use that word <@!{ctx.author.id}>! ", delete_after=5)
 
-
-class Counter(discord.ui.View):
-    @discord.ui.button(label='0', style=discord.ButtonStyle.red)
-    async def counter(self, button: discord.ui.Button, interaction: discord.Interaction):
-        number = int(button.label)
-        button.label = str(number + 1)
-        if number + 1 >= 5:
-            button.style = discord.ButtonStyle.green
-
-        await interaction.message.edit(view=self)
-
-
 @bot.command(name="testbuttons")
 async def testbuttons(ctx):
    await ctx.channel.send("Context",components=[Button(style=ButtonStyle.blue, label="Test")]) #Blue button with button label of "Test"
