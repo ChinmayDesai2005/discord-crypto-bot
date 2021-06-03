@@ -57,6 +57,8 @@ async def on_message(message):
    if message.author != bot.user:
       if message_content == "mhm":
          await message.channel.send("mhm")
+         return
+   await bot.process_commands(message)
 
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
