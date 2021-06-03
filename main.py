@@ -451,7 +451,7 @@ async def testapi(ctx):
 
 @bot.command(name="testbuttons")
 async def testbuttons(ctx):
-   await ctx.channel.send("Context",components=[Button(style=ButtonStyle.blue, label="Test")]) #Blue button with button label of "Test"
+   await ctx.send("Context",components=[Button(style=ButtonStyle.blue, label="Test")]) #Blue button with button label of "Test"
    res = await self.client.wait_for("button_click") #Wait for button to be clicked
    await res.respond(type=InteractionType.ChannelMessageWithSource, content=f'Button Clicked') #Responds to the button click by printing out a message only user can see #In our case, its "Button Clicked"
 
