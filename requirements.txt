@@ -5,3 +5,4 @@ chess.com==1.7.5
 pymongo==3.11.4
 deta==0.8
 pytz==2021.1
+discord-components==0.5.2.4
