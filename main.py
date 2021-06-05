@@ -1,4 +1,4 @@
-import nest_asyncio  
+import nest_asyncio
 import json
 import requests
 import discord
