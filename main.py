@@ -457,5 +457,6 @@ async def testbuttons(ctx):
    res = await bot.wait_for("button_click") #Wait for button to be clicked
    await res.respond(type=InteractionType.ChannelMessageWithSource, content=f'Button Clicked') #Responds to the button click by printing out a message only user can see #In our case, its "Button Clicked"
 
+bot.run(os.environ['TOKEN'])
 # apply mongodb on all code
 # do graph shit
