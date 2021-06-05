@@ -459,9 +459,11 @@ async def testbuttons(ctx):
 
 @bot.command()
 async def buttons(ctx):
+   def respont_test():
+      await res.respond(type=InteractionType.ChannelMessageWithSource, content=f'Button Clicked')
    await ctx.channel.send("Context", components = [Button(style=ButtonStyle.blue, label="Test")]) #Blue button with button label of "Test"
    res = await bot.wait_for("button_click") #Wait for button to be clicked
-   await res.respond(type=InteractionType.ChannelMessageWithSource, content=f'Button Clicked')
+   await res.respond(respond_test)
 bot.run(os.environ['TOKEN'])
 
 # apply mongodb on all code
