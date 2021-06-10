@@ -55,13 +55,13 @@ async def on_ready():
   await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Crypto Prices"))
 
 @bot.event
-async def on_message(message):
-   message_content = message.content.lower()
-   if message.author != bot.user:
+async def on_message(ctx):
+   message_content = ctx.content.lower()
+   if ctx.author != bot.user:
       if message_content in mhm_list:
-         await message.channel.send('https://tenor.com/view/you-have-become-the-very-thing-you-swore-to-destroy-obi-wan-swore-gif-19009891', delete_after=3)
+         await ctx.channel.send("https://tenor.com/view/you-have-become-the-very-thing-you-swore-to-destroy-obi-wan-swore-gif-19009891", delete_after=3)
       return
-   await bot.process_commands(message)
+   await bot.process_commands(ctx)
 
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
