@@ -59,7 +59,7 @@ async def on_message(ctx):
    message_content = ctx.content.lower()
    if ctx.author != bot.user:
       if message_content in mhm_list:
-         await ctx.channel.send("https://tenor.com/view/you-have-become-the-very-thing-you-swore-to-destroy-obi-wan-swore-gif-19009891", delete_after=3)
+         await ctx.channel.send("Don't Use that!", delete_after=3)
       return
    await bot.process_commands(ctx)
 
