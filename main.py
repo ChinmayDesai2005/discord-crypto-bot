@@ -55,13 +55,13 @@ async def on_ready():
   await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Crypto Prices"))
 
 @bot.event
-async def on_message(ctx):
-   message_content = ctx.content.lower()
-   if ctx.author != bot.user:
-      if message_content in mhm_list:
-         await ctx.channel.send("Don't Use that!", delete_after=3)
-      return
-   await bot.process_commands(ctx)
+async def on_message(message):
+   message_content = message.content.lower()
+   for i in mhm_list:
+      if i in message_content:
+         await message.channel.send("Testing!", delete_after=3)
+         return
+   await bot.process_commands(message)
 
 # @bot.command(name='chess', description="ChessBot")
 # async def chess(ctx)
