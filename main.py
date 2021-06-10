@@ -59,8 +59,8 @@ async def on_message(message):
    message_content = message.content.lower()
    if message.author != bot.user:
       if message_content in mhm_list:
-         await message.channel.send('https://tenor.com/view/you-have-become-the-very-thing-you-swore-to-destroy-obi-wan-swore-gif-19009891', delete_after=10)
-         return
+         await message.channel.send('https://tenor.com/view/you-have-become-the-very-thing-you-swore-to-destroy-obi-wan-swore-gif-19009891', delete_after=3)
+      return
    await bot.process_commands(message)
 
 # @bot.command(name='chess', description="ChessBot")
