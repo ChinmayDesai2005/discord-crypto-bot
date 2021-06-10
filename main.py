@@ -59,7 +59,7 @@ async def on_message(message):
    message_content = message.content.lower()
    for i in mhm_list:
       if i in message_content:
-         await message.channel.send(f"Testing!{ctx.author.mention}", delete_after=3)
+         await message.channel.send(f"Testing!{message.author.mention}", delete_after=3)
          return
    await bot.process_commands(message)
 
