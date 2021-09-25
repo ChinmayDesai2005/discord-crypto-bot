@@ -465,7 +465,7 @@ async def myada(ctx):
          embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
          embed.set_thumbnail(url="https://cryptologos.cc/logos/cardano-ada-logo.png")
          embed.add_field(name=ada_formatted, value=check_time())
-         await ctx.channel.send(embed=embed) ltc
+         await ctx.channel.send(embed=embed)
       elif coins_show.items[0]["ada"] == 0:
          await ctx.channel.send("You have `0` ADA. Use `~setmyada` to update your ADA")
    elif not coins_show.items:
