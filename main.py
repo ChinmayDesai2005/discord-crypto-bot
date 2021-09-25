@@ -177,7 +177,7 @@ async def setmydoge(ctx):
          db.update({"user": user_id, "doge" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("Doge Coins Updated Successfully for " + user_id)
       elif not users.items:
-         new_user = {"user": user_id, "doge": msg_intted}
+         new_user = {"user": user_id, "doge": msg_intted, "bat": 0, "ltc": 0, "ada": 0}
          db.put(new_user)
          time.sleep(0.2)
          await ctx.channel.send("(New_User) Doge Coins Updated Successfully " + user_id)
@@ -207,7 +207,7 @@ async def setmybat(ctx):
          db.update({"user": user_id, "bat" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("BAT Updated Successfully for " + user_id)
       elif not users.items:
-         new_user = {"user": user_id, "bat": msg_intted}
+         new_user = {"user": user_id, "doge": 0, "bat": msg_intted, "ltc": 0, "ada": 0}
          db.put(new_user)
          time.sleep(0.2)
          await ctx.channel.send("(New_User) BAT Updated Successfully " + user_id)
@@ -236,7 +236,7 @@ async def setmyltc(ctx):
          db.update({"user": user_id, "ltc" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("LTC Updated Successfully for " + user_id)
       elif not users.items:
-         new_user = {"user": user_id, "ltc": msg_intted}
+         new_user = {"user": user_id, "doge": 0, "bat": 0, "ltc": msg_intted, "ada": 0}
          db.put(new_user)
          time.sleep(0.2)
          await ctx.channel.send("(New_User) LTC Updated Successfully " + user_id)
