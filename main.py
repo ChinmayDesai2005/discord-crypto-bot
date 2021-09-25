@@ -269,7 +269,7 @@ async def mydoge(ctx):
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
    print(coins_show.items)
-   if coins_show:
+   if coins_show.items:
       user_doge = coins_show.items[0]["doge"]
       doge_inr = float(user_doge) * float(ticker_inr)
       doge_usd = float(user_doge) * float(ticker_usd)
@@ -279,7 +279,7 @@ async def mydoge(ctx):
       embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
       embed.add_field(name=doge_formatted, value=check_time())
       await ctx.channel.send(embed=embed)
-   elif not coins_show:
+   elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
 
 @bot.command(name='mybat')
@@ -307,7 +307,7 @@ async def mybat(ctx):
    ticker_usd = re.sub(str_remove, "", ticker_format_usd)
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
-   if coins_show:
+   if coins_show.items:
       user_bat = coins_show.items[0]["bat"]
       bat_inr = float(user_bat) * float(ticker_inr)
       bat_usd = float(user_bat) * float(ticker_usd)
@@ -317,7 +317,7 @@ async def mybat(ctx):
       embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
       embed.add_field(name=doge_formatted, value=check_time())
       await ctx.channel.send(embed=embed)
-   elif not coins_show:
+   elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
 @bot.command(name='myltc')
 async def myltc(ctx):
@@ -344,7 +344,7 @@ async def myltc(ctx):
    ticker_usd = re.sub(str_remove, "", ticker_format_usd)
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
-   if coins_show:
+   if coins_show.items:
       user_ltc = coins_show.items[0]["ltc"]
       ltc_inr = float(user_ltc) * float(ticker_inr)
       ltc_usd = float(user_ltc) * float(ticker_usd)
@@ -355,7 +355,7 @@ async def myltc(ctx):
       embed.set_thumbnail(url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
       embed.add_field(name=ltc_formatted, value=check_time())
       await ctx.channel.send(embed=embed)
-   elif not coins_show:
+   elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmyltc <no. of LTC>`")
 
 @bot.command(name='ping')
