@@ -155,6 +155,38 @@ async def ltc(ctx):
    embed.set_thumbnail(url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
    await ctx.channel.send(embed=embed)
 
+@bot.command(name='ada', description="Give ADA Price")
+async def ada(ctx):
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "ltcinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "ltcusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
+   
+   crypto_values = {"valueinr": [], "valueusd": []}
+   inputs = ["https://api.wazirx.com/api/v2/tickers/adainr.json",
+   "https://api.wazirx.com/api/v2/tickers/adausdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = "₹" + str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_format_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = "$" + str(crypto_values["valueusd"])
+   str_remove = "[\[\'\]]"
+   ticker_format_usd = re.sub(str_remove, "", ticker_format_usd)
+   time_now = check_time()
+   embed = discord.Embed(
+   color = 	0x345D9D)
+   embed.set_author(name="Cardano")
+   embed.add_field(name= f"{ticker_format_inr}\n{ticker_format_usd}", value = f"{time_now}")
+   embed.set_thumbnail(url="https://cryptologos.cc/logos/cardano-ada-logo.png")
+   await ctx.channel.send(embed=embed)
+
 @bot.command(name='setmydoge', description="Set the number of doge you have")
 async def setmydoge(ctx):
    message_cont = ctx.message.content
@@ -180,7 +212,7 @@ async def setmydoge(ctx):
          new_user = {"user": user_id, "doge": msg_intted, "bat": 0, "ltc": 0, "ada": 0}
          db.put(new_user)
          time.sleep(0.2)
-         await ctx.channel.send("(New_User) Doge Coins Updated Successfully " + user_id)
+         await ctx.channel.send("Doge Coins Updated Successfully " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
 
@@ -210,7 +242,7 @@ async def setmybat(ctx):
          new_user = {"user": user_id, "doge": 0, "bat": msg_intted, "ltc": 0, "ada": 0}
          db.put(new_user)
          time.sleep(0.2)
-         await ctx.channel.send("(New_User) BAT Updated Successfully " + user_id)
+         await ctx.channel.send("BAT Updated Successfully " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
 
@@ -239,9 +271,38 @@ async def setmyltc(ctx):
          new_user = {"user": user_id, "doge": 0, "bat": 0, "ltc": msg_intted, "ada": 0}
          db.put(new_user)
          time.sleep(0.2)
-         await ctx.channel.send("(New_User) LTC Updated Successfully " + user_id)
+         await ctx.channel.send("LTC Updated Successfully " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmyltc `number`")
+
+@bot.command(name='setmyada', description="Set the number of ADA you have")
+async def setmyada(ctx):
+   message_cont = ctx.message.content
+   msg_splitted = message_cont.split()
+   msg_len = len(msg_splitted)
+   user_id = '<@!' + str(ctx.author.id) + ">"
+   print(user_id)
+   print (msg_len)
+   if msg_len >= 2:
+      try:
+         print (msg_splitted[1])
+         msg_intted = float(msg_splitted[1])
+      except:
+         await ctx.channel.send("Wrong Syntax \n Syntax: ~setmyada `number`")
+      users = db.fetch({"user": user_id})
+      time.sleep(0.4)
+      print(users.items)
+      if users.items:
+         coins_set = users.items[0]["ada"]
+         db.update({"user": user_id, "ada" : str(msg_intted)}, users.items[0]["key"])
+         await ctx.channel.send("ADA Updated Successfully for " + user_id)
+      elif not users.items:
+         new_user = {"user": user_id, "doge": 0, "bat": 0, "ltc": 0, "ada": msg_intted}
+         db.put(new_user)
+         time.sleep(0.2)
+         await ctx.channel.send("ADA Updated Successfully " + user_id)
+   else:
+      await ctx.channel.send("Wrong Syntax \n Syntax: ~setmyada `number`")
 
 @bot.command(name='mydoge')
 async def mydoge(ctx):
@@ -270,15 +331,18 @@ async def mydoge(ctx):
    coins_show = db.fetch({"user": user_id})
    print(coins_show.items)
    if coins_show.items:
-      user_doge = coins_show.items[0]["doge"]
-      doge_inr = float(user_doge) * float(ticker_inr)
-      doge_usd = float(user_doge) * float(ticker_usd)
-      embed = discord.Embed(color = 0xba9f33)
-      doge_formatted = str(coin_int(float(user_doge))) + " Dogecoins \n₹" + str(int_check(doge_inr)) + "\n$" + str(int_check(doge_usd))
-      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
-      embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
-      embed.add_field(name=doge_formatted, value=check_time())
-      await ctx.channel.send(embed=embed)
+      if coins_show.items[0]["ltc"] != 0:
+         user_doge = coins_show.items[0]["doge"]
+         doge_inr = float(user_doge) * float(ticker_inr)
+         doge_usd = float(user_doge) * float(ticker_usd)
+         embed = discord.Embed(color = 0xba9f33)
+         doge_formatted = str(coin_int(float(user_doge))) + " Dogecoins \n₹" + str(int_check(doge_inr)) + "\n$" + str(int_check(doge_usd))
+         embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+         embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
+         embed.add_field(name=doge_formatted, value=check_time())
+         await ctx.channel.send(embed=embed)
+      elif coins_show.items[0]["ltc"] == 0:
+         await ctx.channel.send("You have `0` Doge. Use `~setmydoge` to update your Doge")
    elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
 
@@ -308,17 +372,21 @@ async def mybat(ctx):
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
    if coins_show.items:
-      user_bat = coins_show.items[0]["bat"]
-      bat_inr = float(user_bat) * float(ticker_inr)
-      bat_usd = float(user_bat) * float(ticker_usd)
-      embed = discord.Embed(color = 0xFF5000)
-      doge_formatted = str(coin_int(float(user_bat))) + " BAT\n₹" + str(int_check(bat_inr)) + "\n$" + str(int_check(bat_usd))
-      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
-      embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
-      embed.add_field(name=doge_formatted, value=check_time())
-      await ctx.channel.send(embed=embed)
+      if coins_show.items[0]["ltc"] != 0:
+         user_bat = coins_show.items[0]["bat"]
+         bat_inr = float(user_bat) * float(ticker_inr)
+         bat_usd = float(user_bat) * float(ticker_usd)
+         embed = discord.Embed(color = 0xFF5000)
+         doge_formatted = str(coin_int(float(user_bat))) + " BAT\n₹" + str(int_check(bat_inr)) + "\n$" + str(int_check(bat_usd))
+         embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+         embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
+         embed.add_field(name=doge_formatted, value=check_time())
+         await ctx.channel.send(embed=embed)
+      elif coins_show.items[0]["ltc"] == 0:
+         await ctx.channel.send("You have `0` BAT. Use `~setmybat` to update your BAT")
    elif not coins_show.items:
-      await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
+      await ctx.channel.send("You do not have a Account. Please register by `~setmybat <no. of BAT coins>`")
+
 @bot.command(name='myltc')
 async def myltc(ctx):
    def jsonconvert(link):
@@ -360,6 +428,48 @@ async def myltc(ctx):
          await ctx.channel.send("You have `0` LTC. Use `~setmyltc` to update your LTC")
    elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmyltc <no. of LTC>`")
+
+@bot.command(name='myada')
+async def myada(ctx):
+   def jsonconvert(link):
+      response = requests.get(link).json()
+      ticker_buy = response['ticker']['buy']
+      ticker_rounded = round(float(ticker_buy), 2)
+      ticker_rounded = int_check(ticker_rounded)
+      link_split = link.split("/")
+      if link_split[-1] == "ltcinr.json":
+         crypto_values["valueinr"].append(ticker_rounded)
+      elif link_split[-1] == "ltcusdt.json":
+         crypto_values["valueusd"].append(ticker_rounded)
+   
+   crypto_values = {"valueinr": [], "valueusd": []}
+   inputs = ["https://api.wazirx.com/api/v2/tickers/adainr.json",
+   "https://api.wazirx.com/api/v2/tickers/adausdt.json"]
+   with ThreadPoolExecutor(2) as thread_pool:
+      results = thread_pool.map(jsonconvert, inputs)
+   ticker_format_inr = str(crypto_values["valueinr"])
+   str_remove = "[\[\'\]]"
+   ticker_inr = re.sub(str_remove, "", ticker_format_inr)
+   ticker_format_usd = str(crypto_values["valueusd"])
+   ticker_usd = re.sub(str_remove, "", ticker_format_usd)
+   user_id = '<@!' + str(ctx.author.id) + '>'
+   coins_show = db.fetch({"user": user_id})
+   if coins_show.items:
+      if coins_show.items[0]["ada"] != 0:
+         user_ada = coins_show.items[0]["ada"]
+         ada_inr = float(user_ada) * float(ticker_inr)
+         ada_usd = float(user_ada) * float(ticker_usd)
+         embed=discord.Embed(
+         color = 	0x345D9D)
+         ada_formatted = str(coin_int(float(user_ada))) + " ADA \n₹" + str(int_check(ada_inr)) + "\n$" + str(int_check(ada_usd))
+         embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+         embed.set_thumbnail(url="https://cryptologos.cc/logos/cardano-ada-logo.png")
+         embed.add_field(name=ada_formatted, value=check_time())
+         await ctx.channel.send(embed=embed) ltc
+      elif coins_show.items[0]["ada"] == 0:
+         await ctx.channel.send("You have `0` ADA. Use `~setmyada` to update your ADA")
+   elif not coins_show.items:
+      await ctx.channel.send("You do not have a Account. Please register by `~setmyada <no. of ADA>`")
 
 @bot.command(name='ping')
 async def ping(ctx):
