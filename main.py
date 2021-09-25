@@ -180,7 +180,7 @@ async def setmydoge(ctx):
          new_user = {"user": user_id, "doge": msg_intted}
          db.put(new_user)
          time.sleep(0.2)
-         await ctx.channel.send("Doge Coins Updated Successfully " + user_id)
+         await ctx.channel.send("(New_User) Doge Coins Updated Successfully " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
 
@@ -199,18 +199,18 @@ async def setmybat(ctx):
          msg_intted = float(msg_splitted[1])
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
-      users = bat_db.find_one({"user_id": user_id})
+      users = db.fetch({"user": user_id})
       time.sleep(0.4)
-      print(users)
-      if users != None:
-         coins_set = users["amount"]
-         bat_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" : str(msg_intted)})
+      print(users.items)
+      if users.items:
+         coins_set = users.items[0]["bat"]
+         db.update({"user": user_id, "bat" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("BAT Updated Successfully for " + user_id)
-      elif users == None:
-         new_user = {"user_id": user_id, "amount": msg_intted}
-         bat_db.insert_one(new_user)
+      elif not users.items:
+         new_user = {"user": user_id, "bat": msg_intted}
+         db.put(new_user)
          time.sleep(0.2)
-         await ctx.channel.send("BAT Updated Successfully " + user_id)
+         await ctx.channel.send("(New_User) BAT Updated Successfully " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmybat `number`")
 
@@ -228,18 +228,18 @@ async def setmyltc(ctx):
          msg_intted = float(msg_splitted[1])
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmyltc `number`")
-      users = ltc_db.find_one({"user_id": user_id})
+      users = db.fetch({"user": user_id})
       time.sleep(0.4)
-      print(users)
-      if users != None:
-         coins_set = users["amount"]
-         ltc_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" : str(msg_intted)})
+      print(users.items)
+      if users.items:
+         coins_set = users.items[0]["ltc"]
+         db.update({"user": user_id, "ltc" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("LTC Updated Successfully for " + user_id)
-      elif users == None:
-         new_user = {"user_id": user_id, "amount": msg_intted}
-         ltc_db.insert_one(new_user)
+      elif not users.items:
+         new_user = {"user": user_id, "ltc": msg_intted}
+         db.put(new_user)
          time.sleep(0.2)
-         await ctx.channel.send("LTC Updated Successfully " + user_id)
+         await ctx.channel.send("(New_User) LTC Updated Successfully " + user_id)
    else:
       await ctx.channel.send("Wrong Syntax \n Syntax: ~setmyltc `number`")
 
