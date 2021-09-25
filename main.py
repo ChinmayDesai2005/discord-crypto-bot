@@ -269,7 +269,7 @@ async def mydoge(ctx):
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
    if coins_show:
-      user_doge = coins_show[0]["doge"]
+      user_doge = coins_show.items[0]["doge"]
       doge_inr = float(user_doge) * float(ticker_inr)
       doge_usd = float(user_doge) * float(ticker_usd)
       embed = discord.Embed(color = 0xba9f33)
