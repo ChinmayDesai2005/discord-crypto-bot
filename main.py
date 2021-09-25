@@ -163,9 +163,9 @@ async def ada(ctx):
       ticker_rounded = round(float(ticker_buy), 2)
       ticker_rounded = int_check(ticker_rounded)
       link_split = link.split("/")
-      if link_split[-1] == "ltcinr.json":
+      if link_split[-1] == "adainr.json":
          crypto_values["valueinr"].append(ticker_rounded)
-      elif link_split[-1] == "ltcusdt.json":
+      elif link_split[-1] == "adausdt.json":
          crypto_values["valueusd"].append(ticker_rounded)
    
    crypto_values = {"valueinr": [], "valueusd": []}
@@ -184,7 +184,7 @@ async def ada(ctx):
    color = 	0x345D9D)
    embed.set_author(name="Cardano")
    embed.add_field(name= f"{ticker_format_inr}\n{ticker_format_usd}", value = f"{time_now}")
-   embed.set_thumbnail(url="https://cryptologos.cc/logos/cardano-ada-logo.png")
+   embed.set_thumbnail(url="https://cdn4.iconfinder.com/data/icons/crypto-currency-and-coin-2/256/cardano_ada-512.png")
    await ctx.channel.send(embed=embed)
 
 @bot.command(name='setmydoge', description="Set the number of doge you have")
@@ -437,9 +437,9 @@ async def myada(ctx):
       ticker_rounded = round(float(ticker_buy), 2)
       ticker_rounded = int_check(ticker_rounded)
       link_split = link.split("/")
-      if link_split[-1] == "ltcinr.json":
+      if link_split[-1] == "adainr.json":
          crypto_values["valueinr"].append(ticker_rounded)
-      elif link_split[-1] == "ltcusdt.json":
+      elif link_split[-1] == "adausdt.json":
          crypto_values["valueusd"].append(ticker_rounded)
    
    crypto_values = {"valueinr": [], "valueusd": []}
@@ -463,7 +463,7 @@ async def myada(ctx):
          color = 	0x345D9D)
          ada_formatted = str(coin_int(float(user_ada))) + " ADA \n₹" + str(int_check(ada_inr)) + "\n$" + str(int_check(ada_usd))
          embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
-         embed.set_thumbnail(url="https://cryptologos.cc/logos/cardano-ada-logo.png")
+         embed.set_thumbnail(url="https://cdn4.iconfinder.com/data/icons/crypto-currency-and-coin-2/256/cardano_ada-512.png")
          embed.add_field(name=ada_formatted, value=check_time())
          await ctx.channel.send(embed=embed)
       elif coins_show.items[0]["ada"] == 0:
