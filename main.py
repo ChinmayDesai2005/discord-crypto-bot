@@ -173,7 +173,7 @@ async def setmydoge(ctx):
       time.sleep(0.4)
       print(users.items)
       if users.items != None:
-         coins_set = users["doge"]
+         coins_set = users.items[0]["doge"]
          db.update({"user_id": user_id, "doge" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("Doge Coins Updated Successfully for " + user_id)
       elif users.items == None:
