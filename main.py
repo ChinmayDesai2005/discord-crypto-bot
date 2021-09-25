@@ -169,7 +169,7 @@ async def setmydoge(ctx):
          msg_intted = float(msg_splitted[1])
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
-      users = db.fetch({"user_id": user_id})
+      users = db.fetch({"user": user_id})
       time.sleep(0.4)
       print(users.items)
       if users.items != None:
