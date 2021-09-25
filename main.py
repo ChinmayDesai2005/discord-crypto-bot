@@ -345,7 +345,7 @@ async def myltc(ctx):
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
    if coins_show.items:
-      if coins_show.items[0]["ltc"] != 0
+      if coins_show.items[0]["ltc"] != 0:
          user_ltc = coins_show.items[0]["ltc"]
          ltc_inr = float(user_ltc) * float(ticker_inr)
          ltc_usd = float(user_ltc) * float(ticker_usd)
