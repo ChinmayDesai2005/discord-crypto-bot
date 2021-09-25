@@ -172,12 +172,12 @@ async def setmydoge(ctx):
       users = db.fetch({"user": user_id})
       time.sleep(0.4)
       print(users.items)
-      if users.items != None:
+      if users.items:
          coins_set = users.items[0]["doge"]
-         db.update({"user_id": user_id, "doge" : str(msg_intted)}, users.items[0]["key"])
+         db.update({"user": user_id, "doge" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("Doge Coins Updated Successfully for " + user_id)
-      elif users.items == None:
-         new_user = {"user_id": user_id, "doge": msg_intted}
+      elif not users.items:
+         new_user = {"user": user_id, "doge": msg_intted}
          db.put(new_user)
          time.sleep(0.2)
          await ctx.channel.send("Doge Coins Updated Successfully " + user_id)
@@ -267,9 +267,9 @@ async def mydoge(ctx):
    ticker_format_usd = str(crypto_values["valueusd"])
    ticker_usd = re.sub(str_remove, "", ticker_format_usd)
    user_id = '<@!' + str(ctx.author.id) + '>'
-   coins_show = doge_db.find_one({"user_id": user_id})
+   coins_show = db.fetch({"user": user_id})
    if coins_show != None:
-      user_doge = coins_show["amount"]
+      user_doge = coins_show[0]["doge"]
       doge_inr = float(user_doge) * float(ticker_inr)
       doge_usd = float(user_doge) * float(ticker_usd)
       embed = discord.Embed(color = 0xba9f33)
