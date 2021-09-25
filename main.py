@@ -181,7 +181,7 @@ async def ada(ctx):
    ticker_format_usd = re.sub(str_remove, "", ticker_format_usd)
    time_now = check_time()
    embed = discord.Embed(
-   color = 	0x345D9D)
+   color = 	0x3468D1)
    embed.set_author(name="Cardano")
    embed.add_field(name= f"{ticker_format_inr}\n{ticker_format_usd}", value = f"{time_now}")
    embed.set_thumbnail(url="https://cdn4.iconfinder.com/data/icons/crypto-currency-and-coin-2/256/cardano_ada-512.png")
@@ -460,7 +460,7 @@ async def myada(ctx):
          ada_inr = float(user_ada) * float(ticker_inr)
          ada_usd = float(user_ada) * float(ticker_usd)
          embed=discord.Embed(
-         color = 	0x345D9D)
+         color = 	0x3468D1)
          ada_formatted = str(coin_int(float(user_ada))) + " ADA \n₹" + str(int_check(ada_inr)) + "\n$" + str(int_check(ada_usd))
          embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
          embed.set_thumbnail(url="https://cdn4.iconfinder.com/data/icons/crypto-currency-and-coin-2/256/cardano_ada-512.png")
