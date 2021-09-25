@@ -268,7 +268,7 @@ async def mydoge(ctx):
    ticker_usd = re.sub(str_remove, "", ticker_format_usd)
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
-   if coins_show != None:
+   if coins_show:
       user_doge = coins_show[0]["doge"]
       doge_inr = float(user_doge) * float(ticker_inr)
       doge_usd = float(user_doge) * float(ticker_usd)
