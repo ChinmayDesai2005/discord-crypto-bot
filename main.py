@@ -171,10 +171,10 @@ async def setmydoge(ctx):
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
       users = db.fetch({"user_id": user_id})
       time.sleep(0.4)
-      print(users)
+      print(users.items)
       if users != None:
          coins_set = users["doge"]
-         db.update({"user_id": user_id, "doge" : str(msg_intted)}, users[0]["key"])
+         db.update({"user_id": user_id, "doge" : str(msg_intted)}, users.items[0]["key"])
          await ctx.channel.send("Doge Coins Updated Successfully for " + user_id)
       elif users == None:
          new_user = {"user_id": user_id, "doge": msg_intted}
