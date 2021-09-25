@@ -11,7 +11,7 @@ import time
 from discord.ext import commands
 from datetime import datetime
 import pytz
-import deta
+from deta import Deta
 
 printer = pprint.PrettyPrinter()
 nest_asyncio.apply()
