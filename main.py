@@ -3,27 +3,23 @@ import json
 import requests
 import discord
 from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
-# from chessdotcom import get_player_stats\
 from concurrent.futures import ThreadPoolExecutor
 import pprint
 import os
 import re
 import time
 from discord.ext import commands
-from pymongo import MongoClient
 from datetime import datetime
 import pytz
+import deta
 
 printer = pprint.PrettyPrinter()
 nest_asyncio.apply()
 client = discord.Client()
 bot = commands.Bot(command_prefix="~", case_insensitive=True)
 sleep_time = 0.2
-mongoclient = MongoClient(os.environ['MONGO_URL'])
-mongodb = mongoclient.test
-doge_db = mongodb.doge
-bat_db = mongodb.bat
-ltc_db = mongodb.ltc
+deta = Deta(os.environ['DETA_KEY'])
+db = deta.Base("discord-bot")
 mhm_list = ["mhm", "mhhm", "mhhhm", "mmhm", "mkm", "mlm", "hmm"]
 
 def check_time():
@@ -62,81 +58,7 @@ async def on_message(message):
          await message.channel.send(f"Testing!{message.author.mention}", delete_after=3)
    await bot.process_commands(message)
 
-# @bot.command(name='chess', description="ChessBot")
-# async def chess(ctx)
-#    final_lst = []
-#    msg = message.content
-#    msg = msg.split()
-#    msg_length = len(msg)
-#    if msg[1] == "user":
-#       username = msg[2]
-#       profile = get_player_stats(username).json
-#       categories = ['chess_blitz', 'chess_rapid', 'chess_bullet']
-#       for category in categories:
-#          category_print = str("Variation: " + category)
-#          last_rating = profile['stats'][category]['last']['rating']
-#          final_rating = "Latest Rating: " + str(last_rating)
-#          final_send = category_print + "\n\t" + final_rating
-#          final_lst.append(final_send)
-#       list_format = final_lst[0] + "\n" + final_lst[1] + "\n" + final_lst[2]
-#       await message.channel.send(list_format)
-#    elif msg[1] == "users":
-#       with open("file.txt", 'r') as f:
-#          users = {'author': [], 'chess': []}
-#          for line in f:
-#             line_stripped = line.strip()
-#             line_split = line_stripped.split()
-#             users['author'].append(line_split[0])
-#             users['chess'].append(line_split[2])
-#          author_ids = users['author']
-#          author_usrnm = users['chess']
-#          f.close()
-#       if msg[2] == "show":
-#          if msg_length == 3:
-#             user_id = '<@!' + str(message.author.id) + '>'
-#             for idx, author_id in enumerate(author_ids):
-#                if user_id == author_id:
-#                   user_same = users['chess'][idx]
-#                   await message.channel.send(user_same)
-#          elif msg_length == 4:
-#             for idx, author_id in enumerate(author_ids):
-#                if msg[3] == author_id:
-#                   user_diff = users['chess'][idx]
-#                   await message.channel.send(user_diff)
-#       elif msg[2] == "add":
-#          chess_user = msg[3]
-#          user_id = '<@!' + str(message.author.id) + '>'
-#          print(user_id)
-#          if user_id in author_ids:
-#             for idx, author_id in enumerate(author_ids):
-#                if user_id == author_id:
-#                print(idx)
-#                user_tobe_replaced = str(users['chess'][idx])
-#                print(to_be_replaced)
-#                user_replace = str(msg[3])
-#                fin = open('file.txt', 'r')
-#                file = fin.read()
-#                file = file.replace(user_tobe_replaced, user_replace)
-#                fin.close()
-#                fout = open('file.txt','w')
-#                fout.write(file)
-#                fout.close()
-#                print(user_tobe_replaced)
-#                await message.channel.send("UserName Updated!")
-#          elif user_id not in author_ids:
-#             if chess_user not in author_usrnm:
-#             with open("file.txt", 'a') as fa:
-#                new = str(user_id + ' - ' +  msg[3])
-#                print(new)
-#                fa.write(new + '\n')
-#                await message.channel.send("Added User Successfully.")
-#                fa.close()
-#             else:
-#                await message.channel.send("Someone has Already Registered this Username")
-#    else:
-#       await message.channel.send("Wrong Syntax!!")
-
-@bot.command(name='doge', description="Give DogeCoin Price")
+@bot.command(name='doge', description="Give Dogecoin Price")
 async def doge(ctx):
    def jsonconvert(link):
       response = requests.get(link).json()
@@ -247,16 +169,16 @@ async def setmydoge(ctx):
          msg_intted = float(msg_splitted[1])
       except:
          await ctx.channel.send("Wrong Syntax \n Syntax: ~setmydoge `number`")
-      users = doge_db.find_one({"user_id": user_id})
+      users = db.fetch({"user_id": user_id})
       time.sleep(0.4)
       print(users)
       if users != None:
-         coins_set = users["amount"]
-         doge_db.replace_one({"user_id": user_id}, {"user_id": user_id, "amount" : str(msg_intted)})
+         coins_set = users["doge"]
+         db.update({"user_id": user_id, "doge" : str(msg_intted)}, users[0]["key"])
          await ctx.channel.send("Doge Coins Updated Successfully for " + user_id)
       elif users == None:
-         new_user = {"user_id": user_id, "amount": msg_intted}
-         doge_db.insert_one(new_user)
+         new_user = {"user_id": user_id, "doge": msg_intted}
+         db.put(new_user)
          time.sleep(0.2)
          await ctx.channel.send("Doge Coins Updated Successfully " + user_id)
    else:
