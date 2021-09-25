@@ -345,16 +345,19 @@ async def myltc(ctx):
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
    if coins_show.items:
-      user_ltc = coins_show.items[0]["ltc"]
-      ltc_inr = float(user_ltc) * float(ticker_inr)
-      ltc_usd = float(user_ltc) * float(ticker_usd)
-      embed=discord.Embed(
-      color = 	0x345D9D)
-      ltc_formatted = str(coin_int(float(user_ltc))) + " LTC \n₹" + str(int_check(ltc_inr)) + "\n$" + str(int_check(ltc_usd))
-      embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
-      embed.set_thumbnail(url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
-      embed.add_field(name=ltc_formatted, value=check_time())
-      await ctx.channel.send(embed=embed)
+      if coins_show.items[0]["ltc"] != 0
+         user_ltc = coins_show.items[0]["ltc"]
+         ltc_inr = float(user_ltc) * float(ticker_inr)
+         ltc_usd = float(user_ltc) * float(ticker_usd)
+         embed=discord.Embed(
+         color = 	0x345D9D)
+         ltc_formatted = str(coin_int(float(user_ltc))) + " LTC \n₹" + str(int_check(ltc_inr)) + "\n$" + str(int_check(ltc_usd))
+         embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+         embed.set_thumbnail(url="https://cryptologos.cc/logos/litecoin-ltc-logo.png")
+         embed.add_field(name=ltc_formatted, value=check_time())
+         await ctx.channel.send(embed=embed)
+      elif coins_show.items[0]["ltc"] == 0:
+         await ctx.channel.send("You have `0` LTC. Use `~setmyltc` to update your LTC")
    elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmyltc <no. of LTC>`")
 
