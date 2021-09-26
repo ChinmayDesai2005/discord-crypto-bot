@@ -492,6 +492,7 @@ async def portfolio(ctx):
       #send
    elif not values.items:
       # You dont have a Account. Add atleast one currency with ~setmy`coin`
+      pass
 
 
 @bot.command(name='ping')
