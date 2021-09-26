@@ -342,6 +342,8 @@ async def mydoge(ctx):
          embed.add_field(name=doge_formatted, value=check_time())
          await ctx.channel.send(embed=embed)
       elif coins_show.items[0]["ltc"] == 0:
+         embed = discord.Embed(color = 0xba9f33)
+         embed.set_author(name=bot.display_name, icon_url=bot.avatar_url)
          await ctx.channel.send("You have `0` Doge. Use `~setmydoge` to update your Doge")
    elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
@@ -505,10 +507,6 @@ async def ping(ctx):
 @bot.command(name='hello')
 async def hello(ctx):
    await ctx.send(f"Hey {ctx.author.name}!")
-
-@bot.command(name="testapi", description="This is testing api fetch speed")
-async def testapi(ctx):
-   await ctx.channel.send(f"Dont use that word <@!{ctx.author.id}>! ", delete_after=5)
 
 @bot.command(name="testbuttons")
 async def testbuttons(ctx):
