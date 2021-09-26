@@ -344,6 +344,7 @@ async def mydoge(ctx):
       elif int_check(coins_show.items[0]["doge"]) == 0:
          embed = discord.Embed(color = 0xba9f33)
          embed.set_author(name=bot.display_name, icon_url=bot.avatar_url)
+         await ctx.channel.send(embed=embed)
          await ctx.channel.send("You have `0` Doge. Use `~setmydoge` to update your Doge")
    elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmydoge <no. of doge coins>`")
