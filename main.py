@@ -341,7 +341,7 @@ async def mydoge(ctx):
          embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
          embed.add_field(name=doge_formatted, value=check_time())
          await ctx.channel.send(embed=embed)
-      elif coins_show.items[0]["doge"] == 0:
+      elif int_check(coins_show.items[0]["doge"]) == 0:
          embed = discord.Embed(color = 0xba9f33)
          embed.set_author(name=bot.display_name, icon_url=bot.avatar_url)
          await ctx.channel.send("You have `0` Doge. Use `~setmydoge` to update your Doge")
