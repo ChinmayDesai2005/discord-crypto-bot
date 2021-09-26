@@ -331,7 +331,7 @@ async def mydoge(ctx):
    coins_show = db.fetch({"user": user_id})
    print(coins_show.items)
    if coins_show.items:
-      if coins_show.items[0]["ltc"] != 0:
+      if coins_show.items[0]["doge"] != 0:
          user_doge = coins_show.items[0]["doge"]
          doge_inr = float(user_doge) * float(ticker_inr)
          doge_usd = float(user_doge) * float(ticker_usd)
@@ -341,7 +341,7 @@ async def mydoge(ctx):
          embed.set_thumbnail(url="https://i.imgur.com/z1FHjgP.png")
          embed.add_field(name=doge_formatted, value=check_time())
          await ctx.channel.send(embed=embed)
-      elif coins_show.items[0]["ltc"] == 0:
+      elif coins_show.items[0]["doge"] == 0:
          embed = discord.Embed(color = 0xba9f33)
          embed.set_author(name=bot.display_name, icon_url=bot.avatar_url)
          await ctx.channel.send("You have `0` Doge. Use `~setmydoge` to update your Doge")
@@ -374,7 +374,7 @@ async def mybat(ctx):
    user_id = '<@!' + str(ctx.author.id) + '>'
    coins_show = db.fetch({"user": user_id})
    if coins_show.items:
-      if coins_show.items[0]["ltc"] != 0:
+      if coins_show.items[0]["bat"] != 0:
          user_bat = coins_show.items[0]["bat"]
          bat_inr = float(user_bat) * float(ticker_inr)
          bat_usd = float(user_bat) * float(ticker_usd)
@@ -384,7 +384,7 @@ async def mybat(ctx):
          embed.set_thumbnail(url="https://cryptologos.cc/logos/basic-attention-token-bat-logo.png")
          embed.add_field(name=doge_formatted, value=check_time())
          await ctx.channel.send(embed=embed)
-      elif coins_show.items[0]["ltc"] == 0:
+      elif coins_show.items[0]["bat"] == 0:
          await ctx.channel.send("You have `0` BAT. Use `~setmybat` to update your BAT")
    elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmybat <no. of BAT coins>`")
