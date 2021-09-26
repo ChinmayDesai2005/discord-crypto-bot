@@ -471,6 +471,29 @@ async def myada(ctx):
    elif not coins_show.items:
       await ctx.channel.send("You do not have a Account. Please register by `~setmyada <no. of ADA>`")
 
+@bot.command(name='portfolio')
+async def portfolio(ctx):
+   message_cont = ctx.message.content
+   msg_splitted = message_cont.split()
+   msg_len = len(msg_splitted)
+   user_id = '<@!' + str(ctx.author.id) + ">"
+   print(user_id)
+   values = db.fetch({"user": user_id})
+   print(values.items)
+   if values.items:
+      doge, bat, ltc, ada = values.items[0]["doge"], values.items[0]["bat"], values.items[0]["ltc"], values.items[0]["ada"]
+      # if doge == 0 and bat == 0 and ltc == 0 and ada == 0:
+      #    # You dont have a Account. Add atleast one currency with ~setmy`coin`
+      print(f"{doge} {bat} {ltc} {ada}")
+      #omit 0s
+      #call api values
+      #add all
+      #embed
+      #send
+   elif not values.items:
+      # You dont have a Account. Add atleast one currency with ~setmy`coin`
+
+
 @bot.command(name='ping')
 async def ping(ctx):
       before = time.monotonic()
@@ -493,5 +516,11 @@ async def testbuttons(ctx):
    await res.respond(type=InteractionType.ChannelMessageWithSource, content=f'Button Clicked') #Responds to the button click by printing out a message only user can see #In our case, its "Button Clicked"
 
 bot.run(os.environ['TOKEN'])
-# apply mongodb on all code
-# do graph shit
+
+
+#take all values
+#omit 0s
+#call api values
+#add all
+#embed
+#send
